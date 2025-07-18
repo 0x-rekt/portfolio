@@ -63,4 +63,8 @@ export const skills = [
     name: "Solidity",
     icon: "/solidity.png",
   },
+  {
+    name: "AWS",
+    icon: "/aws.png",
+  },
 ];
