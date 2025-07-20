@@ -19,7 +19,7 @@ export default function AboutSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: easeOut }}
         >
-          About
+          About{" "}
           <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Me
           </span>
