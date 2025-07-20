@@ -19,7 +19,7 @@ export default function AboutSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: easeOut }}
         >
-          About{" "}
+          About
           <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Me
           </span>
@@ -42,7 +42,7 @@ export default function AboutSection() {
               viewport={{ once: true }}
               transition={{ delay: 0.5, duration: 0.8 }}
             >
-              Hi, I'm{" "}
+              Hi, I&apos;m{" "}
               <motion.span
                 className="font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
                 whileHover={{ scale: 1.05 }}

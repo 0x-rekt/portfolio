@@ -50,8 +50,8 @@ const Experience = () => {
                   Campus Ambassador
                 </h4>
                 <p className="text-gray-600 dark:text-gray-300 mb-3">
-                  Represented and promoted Esummit'24 at Jadavpur University,
-                  engaging with students and organizing events.
+                  Represented and promoted Esummit&apos;24 at Jadavpur
+                  University, engaging with students and organizing events.
                 </p>
                 <Badge
                   variant="secondary"

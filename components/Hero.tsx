@@ -4,7 +4,7 @@ import { BackgroundBeams } from "./BackgroundBeams";
 import Image from "next/image";
 import { Github, Linkedin, Instagram, X, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { backOut, easeInOut, easeOut, motion } from "motion/react";
+import { backOut, easeOut, motion } from "motion/react";
 import { ContainerTextFlip } from "./TextFlipContainer";
 
 const Hero = () => {
@@ -63,19 +63,6 @@ const Hero = () => {
       transition: {
         duration: 0.4,
         ease: backOut,
-      },
-    },
-  };
-
-  const badgeVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        delay: 1.2,
-        ease: easeOut,
       },
     },
   };
