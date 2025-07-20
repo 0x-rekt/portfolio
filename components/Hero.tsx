@@ -81,7 +81,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative w-full min-h-[80vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="relative w-full min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <motion.div
         className="relative z-10 max-w-7xl mx-auto w-full"
         variants={containerVariants}
@@ -89,14 +89,13 @@ const Hero = () => {
         animate="visible"
       >
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Text Content */}
           <motion.div
             className="space-y-6 text-center lg:text-left"
             variants={itemVariants}
           >
             <div className="space-y-4">
               <motion.h1
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white"
+                className="text-4xl font-mono font-bold tracking-tight text-gray-900 dark:text-white"
                 variants={itemVariants}
               >
                 Hi, I am{" "}
@@ -117,6 +116,7 @@ const Hero = () => {
                 <ContainerTextFlip
                   words={[
                     "Full Stack Developer",
+                    "App Developer",
                     "AI Innovator",
                     "Web3 Enthusiast",
                   ]}
@@ -152,7 +152,6 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Profile Section */}
           <motion.div
             className="flex flex-col items-center space-y-6"
             variants={itemVariants}
@@ -180,7 +179,6 @@ const Hero = () => {
               />
             </motion.div>
 
-            {/* Social Links */}
             <motion.div
               className="flex items-center space-x-4"
               variants={containerVariants}
