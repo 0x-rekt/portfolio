@@ -20,107 +20,9 @@ interface Project {
   techStack: TechStack[];
 }
 
-// const projects: Project[] = [
-//   {
-//     title: "JobPair AI",
-//     description:
-//       "Jobpair_ai is an AI-powered career tool offering smart resume reviews, tailored roadmaps, cover letter generation, and voice-based mock interviews—built with a secure, scalable tech stack.",
-//     image: "/placeholder.svg?height=400&width=600&text=JobPair+AI",
-//     liveLink: "https://jobpair-ai.vercel.app/",
-//     githubLink: "https://github.com/Sowdarjya/jobpair_ai",
-//     techStack: [
-//       {
-//         name: "TypeScript",
-//         icon: "/placeholder.svg?height=32&width=32&text=TS",
-//       },
-//       {
-//         name: "Next.js",
-//         icon: "/placeholder.svg?height=32&width=32&text=Next",
-//       },
-//       { name: "Tailwind", icon: "/placeholder.svg?height=32&width=32&text=TW" },
-//       {
-//         name: "Prisma",
-//         icon: "/placeholder.svg?height=32&width=32&text=Prisma",
-//       },
-//       {
-//         name: "PostgreSQL",
-//         icon: "/placeholder.svg?height=32&width=32&text=PG",
-//       },
-//       { name: "Clerk", icon: "/placeholder.svg?height=32&width=32&text=Clerk" },
-//     ],
-//   },
-//   {
-//     name: "LOLcial",
-//     description:
-//       "A modern social media mobile app built with React Native (Expo), Clerk, and Convex, featuring real-time posts, likes, comments, follows, and notifications—designed for a seamless, secure, and interactive user experience.",
-//     image: "/placeholder.svg?height=400&width=600&text=LOLcial",
-//     liveLink: "N/A",
-//     githubLink: "https://github.com/Sowdarjya/LOLcial",
-//     techStack: [
-//       {
-//         name: "TypeScript",
-//         icon: "/placeholder.svg?height=32&width=32&text=TS",
-//       },
-//       {
-//         name: "React Native",
-//         icon: "/placeholder.svg?height=32&width=32&text=RN",
-//       },
-//       { name: "Clerk", icon: "/placeholder.svg?height=32&width=32&text=Clerk" },
-//       {
-//         name: "Convex",
-//         icon: "/placeholder.svg?height=32&width=32&text=Convex",
-//       },
-//     ],
-//   },
-//   {
-//     name: "EthPay",
-//     description:
-//       "EthPay is a secure, user-friendly dApp for sending ETH with messages and keywords. Built with React, TailwindCSS, ethers.js, and Solidity, it enables fast, private, and transparent Ethereum transfers—optimized for global, real-time use.",
-//     image: "/placeholder.svg?height=400&width=600&text=EthPay",
-//     liveLink: "https://eth-pay-pearl.vercel.app/",
-//     githubLink: "https://github.com/Sowdarjya/eth-pay",
-//     techStack: [
-//       {
-//         name: "TypeScript",
-//         icon: "/placeholder.svg?height=32&width=32&text=TS",
-//       },
-//       { name: "React", icon: "/placeholder.svg?height=32&width=32&text=React" },
-//       { name: "Tailwind", icon: "/placeholder.svg?height=32&width=32&text=TW" },
-//       {
-//         name: "Ethers.js",
-//         icon: "/placeholder.svg?height=32&width=32&text=Ethers",
-//       },
-//       {
-//         name: "Solidity",
-//         icon: "/placeholder.svg?height=32&width=32&text=Sol",
-//       },
-//     ],
-//   },
-//   {
-//     name: "CoinScope",
-//     description:
-//       "CoinScope is a crypto tracking web app that monitors 99+ cryptocurrencies with real-time data, price trends, and currency conversion. Built with React, Firebase, and TailwindCSS, it features user authentication, personalized watchlists, and the latest global crypto news—all in a sleek, responsive interface.",
-//     image: "/placeholder.svg?height=400&width=600&text=CoinScope",
-//     liveLink: "https://coin-scope.vercel.app/",
-//     githubLink: "https://github.com/Sowdarjya/CoinScope",
-//     techStack: [
-//       {
-//         name: "JavaScript",
-//         icon: "/placeholder.svg?height=32&width=32&text=JS",
-//       },
-//       { name: "React", icon: "/placeholder.svg?height=32&width=32&text=React" },
-//       { name: "Tailwind", icon: "/placeholder.svg?height=32&width=32&text=TW" },
-//       {
-//         name: "Firebase",
-//         icon: "/placeholder.svg?height=32&width=32&text=Firebase",
-//       },
-//     ],
-//   },
-// ];
-
 export default function Projects() {
   const [active, setActive] = useState<Project | null>(null);
-  const ref = useRef<HTMLDivElement>(null); // <-- Remove the cast here
+  const ref = useRef<HTMLDivElement>(null);
   const id = useId();
 
   useEffect(() => {
@@ -149,13 +51,13 @@ export default function Projects() {
     <div className="py-20 px-4" id="projects">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             My{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Projects
             </span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             A collection of projects I've built using modern technologies and
             best practices.
           </p>
@@ -230,7 +132,7 @@ export default function Projects() {
                             href={active.liveLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 text-sm rounded-full font-bold bg-green-500 hover:bg-green-600 text-white transition-colors"
+                            className="flex items-center gap-2 px-4 py-2 text-sm rounded-full font-bold bg-green-500 hover:bg-green-600 text-white transition-colors cursor-pointer"
                           >
                             <ExternalLink size={16} />
                             Live Demo
@@ -240,7 +142,7 @@ export default function Projects() {
                           href={active.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-4 py-2 text-sm rounded-full font-bold bg-gray-800 hover:bg-gray-900 text-white transition-colors"
+                          className="flex items-center gap-2 px-4 py-2 text-sm rounded-full font-bold bg-gray-800 hover:bg-gray-900 text-white transition-colors cursor-pointer"
                         >
                           <Github size={16} />
                           GitHub
@@ -331,7 +233,7 @@ export default function Projects() {
 
                 <motion.button
                   layoutId={`button-${getProjectTitle(project)}-${id}`}
-                  className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 transition-colors"
+                  className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 transition-colors cursor-pointer"
                 >
                   View Details
                 </motion.button>
