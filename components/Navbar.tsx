@@ -6,10 +6,10 @@ import { AlignRight } from "lucide-react";
 const Navbar = () => {
   const navLinks = [
     { name: "Home", href: "/#hero" },
+    { name: "About", href: "/#about" },
     { name: "Skills", href: "/#skills" },
-    { name: "Experience", href: "/#experience" },
     { name: "Projects", href: "/#projects" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Experiences", href: "/#experience" },
   ];
 
   return (
@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex items-center justify-between h-14">
           <Link
-            href="/"
+            href="#hero"
             className="text-2xl font-bold text-primary font-mono tracking-wider"
           >
             SK

@@ -135,8 +135,8 @@ const Hero = () => {
               className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl"
               variants={itemVariants}
             >
-              Passionate about creating innovative web solutions and bringing
-              ideas to life through code.
+              Passionate about creating innovative solutions and bringing ideas
+              to life through code.
             </motion.p>
 
             <motion.div
