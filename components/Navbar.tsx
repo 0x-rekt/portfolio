@@ -5,7 +5,7 @@ import { AlignRight } from "lucide-react";
 
 const Navbar = () => {
   const navLinks = [
-    { name: "Home", href: "/" },
+    { name: "Home", href: "/#hero" },
     { name: "Skills", href: "/#skills" },
     { name: "Experience", href: "/#experience" },
     { name: "Projects", href: "/#projects" },
@@ -18,9 +18,9 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-14">
           <Link
             href="/"
-            className="text-xl font-bold text-primary font-mono tracking-wider"
+            className="text-2xl font-bold text-primary font-mono tracking-wider"
           >
-            Sowdarjya
+            SK
           </Link>
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-4">

@@ -81,7 +81,10 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative w-full min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div
+      className="relative w-full min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8"
+      id="hero"
+    >
       <motion.div
         className="relative z-10 max-w-7xl mx-auto w-full"
         variants={containerVariants}

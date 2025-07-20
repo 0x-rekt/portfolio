@@ -20,10 +20,6 @@ export const projects = [
         icon: "/tailwind.png",
       },
       {
-        name: "Prisma",
-        icon: "/prisma.png",
-      },
-      {
         name: "PostgreSQL",
         icon: "/postgres.png",
       },
@@ -63,6 +59,7 @@ export const projects = [
     name: "EthPay",
     description:
       "EthPay is a secure, user-friendly dApp for sending ETH with messages and keywords. Built with React, TailwindCSS, ethers.js, and Solidity, it enables fast, private, and transparent Ethereum transfers—optimized for global, real-time use.",
+    image: "/ethpay.png",
     liveLink: "https://eth-pay-pearl.vercel.app/",
     githubLink: "https://github.com/Sowdarjya/eth-pay",
     techStack: [
@@ -92,6 +89,7 @@ export const projects = [
     name: "CoinScope",
     description:
       "CoinScope is a crypto tracking web app that monitors 99+ cryptocurrencies with real-time data, price trends, and currency conversion. Built with React, Firebase, and TailwindCSS, it features user authentication, personalized watchlists, and the latest global crypto news—all in a sleek, responsive interface.",
+    image: "/coinscope.png",
     liveLink: "https://coin-scope.vercel.app/",
     githubLink: "https://github.com/Sowdarjya/CoinScope",
     techStack: [
