@@ -2,7 +2,14 @@
 
 import { BackgroundBeams } from "./BackgroundBeams";
 import Image from "next/image";
-import { Github, Linkedin, Instagram, X, ExternalLink } from "lucide-react";
+import {
+  Github,
+  Linkedin,
+  Instagram,
+  X,
+  ExternalLink,
+  Download,
+} from "lucide-react";
 import Link from "next/link";
 import { backOut, easeOut, motion } from "motion/react";
 import { ContainerTextFlip } from "./TextFlipContainer";
@@ -126,6 +133,13 @@ const Hero = () => {
               to life through code.
             </motion.p>
 
+            <motion.p
+              className="text-base text-gray-500 dark:text-gray-500"
+              variants={itemVariants}
+            >
+              Based in Kolkata, India
+            </motion.p>
+
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
               variants={containerVariants}
@@ -138,6 +152,17 @@ const Hero = () => {
                   View My Work
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </Link>
+              </motion.div>
+
+              <motion.div variants={buttonVariants}>
+                <a
+                  href="/resume.pdf"
+                  download="resume.pdf"
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary dark:text-blue-400 border border-primary dark:border-blue-400 rounded-lg hover:bg-primary hover:text-white dark:hover:bg-blue-400 dark:hover:text-gray-900 transition-colors hover:scale-105 transform duration-200"
+                >
+                  Download Resume
+                  <Download className="ml-2 h-4 w-4" />
+                </a>
               </motion.div>
             </motion.div>
           </motion.div>

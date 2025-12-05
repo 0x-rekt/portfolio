@@ -7,7 +7,7 @@ import { Calendar, Trophy, Users, Code, Zap, Target } from "lucide-react";
 const Experience = () => {
   const data = [
     {
-      title: "September 2024 - Present",
+      title: "September 2024 - September 2025",
       content: (
         <Card className="border-l-4 border-l-blue-500 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-950/20 dark:to-transparent">
           <CardContent className="p-6">
@@ -247,7 +247,7 @@ const Experience = () => {
       ),
     },
     {
-      title: "July 2025 - Present",
+      title: "July 2025 - August 2025",
       content: (
         <Card className="border-l-4 border-l-emerald-500 bg-gradient-to-r from-emerald-50 to-transparent dark:from-emerald-950/20 dark:to-transparent">
           <CardContent className="p-6">
@@ -257,11 +257,11 @@ const Experience = () => {
               </div>
               <div className="flex-1">
                 <h4 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">
-                  Blockchain Development Intern
+                  Ex-Blockchain Development Intern
                 </h4>
                 <p className="text-gray-600 dark:text-gray-300 mb-3">
-                  Currently working as an intern at BlockSeBlock, gaining
-                  hands-on experience in blockchain and web development.
+                  Worked as an intern at BlockSeBlock, gaining hands-on
+                  experience in blockchain and web development.
                 </p>
                 <div className="flex gap-2">
                   <Badge
@@ -278,6 +278,67 @@ const Experience = () => {
                     Blockchain
                   </Badge>
                 </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ),
+    },
+    {
+      title: "September 2025 - Present",
+      content: (
+        <Card className="border-l-4 border-l-blue-500 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-950/20 dark:to-transparent">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-3">
+              <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                <Users className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">
+                  Core Member - Tech Team
+                </h4>
+                <p className="text-gray-600 dark:text-gray-300 mb-3">
+                  Serving as a core member of the tech team at Google Developer
+                  Groups On Campus AOT, contributing to technical initiatives
+                  and community building.
+                </p>
+                <Badge
+                  variant="secondary"
+                  className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+                >
+                  <Users className="h-3 w-3 mr-1" />
+                  Leadership
+                </Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ),
+    },
+    {
+      title: "October 2025 - Present",
+      content: (
+        <Card className="border-l-4 border-l-red-500 bg-gradient-to-r from-red-50 to-transparent dark:from-red-950/20 dark:to-transparent">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-3">
+              <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
+                <Code className="h-5 w-5 text-red-600 dark:text-red-400" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">
+                  Core Member - Tech Team
+                </h4>
+                <p className="text-gray-600 dark:text-gray-300 mb-3">
+                  Active core member of the tech team at SC-ECE, involved in
+                  technical projects and departmental activities.
+                </p>
+                <Badge
+                  variant="secondary"
+                  className="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+                >
+                  <Code className="h-3 w-3 mr-1" />
+                  Technical
+                </Badge>
               </div>
             </div>
           </CardContent>

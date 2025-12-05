@@ -1,9 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { AlignRight } from "lucide-react";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const navLinks = [
     { name: "Home", href: "/#hero" },
     { name: "About", href: "/#about" },
@@ -36,7 +40,7 @@ const Navbar = () => {
             </div>
 
             <div className="md:hidden">
-              <Sheet>
+              <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
                   <Button
                     variant="outline"
@@ -52,6 +56,7 @@ const Navbar = () => {
                       <Link
                         key={link.name}
                         href={link.href}
+                        onClick={() => setIsOpen(false)}
                         className="text-md font-medium transition-colors hover:text-primary"
                       >
                         {link.name}
