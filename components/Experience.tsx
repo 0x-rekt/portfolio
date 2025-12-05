@@ -37,36 +37,6 @@ const Experience = () => {
       ),
     },
     {
-      title: "October 2024 - November 2024",
-      content: (
-        <Card className="border-l-4 border-l-green-500 bg-gradient-to-r from-green-50 to-transparent dark:from-green-950/20 dark:to-transparent">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-3">
-              <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                <Target className="h-5 w-5 text-green-600 dark:text-green-400" />
-              </div>
-              <div className="flex-1">
-                <h4 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">
-                  Campus Ambassador
-                </h4>
-                <p className="text-gray-600 dark:text-gray-300 mb-3">
-                  Represented and promoted Esummit&apos;24 at Jadavpur
-                  University, engaging with students and organizing events.
-                </p>
-                <Badge
-                  variant="secondary"
-                  className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                >
-                  <Calendar className="h-3 w-3 mr-1" />
-                  Event Management
-                </Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      ),
-    },
-    {
       title: "January 2025 - March 2025",
       content: (
         <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-950/20 dark:to-transparent">

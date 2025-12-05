@@ -1,12 +1,10 @@
 "use client";
 
 import { BackgroundBeams } from "./BackgroundBeams";
-import Image from "next/image";
 import {
   Github,
   Linkedin,
-  Instagram,
-  X,
+  Twitter,
   ExternalLink,
   Download,
 } from "lucide-react";
@@ -33,18 +31,6 @@ const Hero = () => {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: easeOut,
-      },
-    },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.8,
         ease: easeOut,
       },
     },
@@ -85,11 +71,8 @@ const Hero = () => {
         initial="hidden"
         animate="visible"
       >
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <motion.div
-            className="space-y-6 text-center lg:text-left"
-            variants={itemVariants}
-          >
+        <div className="flex flex-col items-center text-center space-y-8">
+          <motion.div className="space-y-6 text-center" variants={itemVariants}>
             <div className="space-y-4">
               <motion.h1
                 className="text-4xl font-mono font-bold tracking-tight text-gray-900 dark:text-white"
@@ -108,17 +91,17 @@ const Hero = () => {
 
               <motion.div
                 variants={itemVariants}
-                className="flex justify-center lg:justify-start"
+                className="flex justify-center"
               >
                 <ContainerTextFlip
                   words={[
                     "Full Stack Developer",
                     "App Developer",
-                    "AI Innovator",
+                    "AI/ML Engineer",
                     "Web3 Enthusiast",
                   ]}
                   interval={3000}
-                  className="text-lg sm:text-xl md:text-4xl"
+                  className="text-lg md:text-2xl"
                   textClassName="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text"
                   animationDuration={600}
                 />
@@ -141,7 +124,7 @@ const Hero = () => {
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-4 justify-center"
               variants={containerVariants}
             >
               <motion.div variants={buttonVariants}>
@@ -165,37 +148,9 @@ const Hero = () => {
                 </a>
               </motion.div>
             </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="flex flex-col items-center space-y-6"
-            variants={itemVariants}
-          >
-            <motion.div className="relative" variants={imageVariants}>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-lg opacity-30"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.3, 0.5, 0.3],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
-              />
-              <Image
-                src="/sowdarjya.jpg"
-                width={280}
-                height={280}
-                alt="Sowdarjya Kolay"
-                className="relative rounded-full border-4 border-white shadow-2xl"
-                priority
-              />
-            </motion.div>
 
             <motion.div
-              className="flex items-center space-x-4"
+              className="flex items-center justify-center space-x-4"
               variants={containerVariants}
             >
               <motion.div variants={socialVariants}>
@@ -227,20 +182,10 @@ const Hero = () => {
                   href="https://x.com/_Kolayyyyyyy__"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-12 h-12 bg-black text-white rounded-full hover:bg-gray-800 transition-colors group"
+                  className="flex items-center justify-center w-12 h-12 bg-black text-white rounded-full hover:bg-gray-800 transition-colors group hover:scale-110 transform duration-200"
                 >
-                  <X className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                </Link>
-              </motion.div>
-
-              <motion.div variants={socialVariants}>
-                <Link
-                  href="https://www.instagram.com/_0x.rekt_/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-12 h-12 bg-pink-600 text-white rounded-full hover:bg-pink-700 transition-colors group"
-                >
-                  <Instagram className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                  <Twitter className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                  <span className="sr-only">Twitter Profile</span>
                 </Link>
               </motion.div>
             </motion.div>
