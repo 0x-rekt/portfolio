@@ -1,120 +1,138 @@
 "use client";
-import { Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
-import { Card, CardContent } from "./ui/card";
-import Autoplay from "embla-carousel-autoplay";
-import { skills } from "@/constants/skills";
-import { easeOut, motion } from "framer-motion";
+
+import React, { useMemo } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { skills } from "../constants/skills";
+// --- Types & Data Organization ---
+
+// We categorize the flat list to make the UI cleaner
+const CATEGORIES = {
+  Frontend: [
+    "JavaScript", "TypeScript", "React.js", "Next.js", 
+    "Tailwind", "React Native"
+  ],
+  Backend: [
+    "Node.js", "Express.js", "Python", "Solidity"
+  ],
+  Database: [
+    "MongoDB", "PostgreSQL", "Firebase"
+  ],
+  "DevOps & Tools": [
+    "Git", "Github", "Docker", "AWS"
+  ]
+};
 
 const Skills = () => {
+  // Memoize grouped skills to avoid recalculation on render
+  const groupedSkills = useMemo(() => {
+    const grouped: Record<string, typeof skills> = {};
+    
+    Object.entries(CATEGORIES).forEach(([category, skillNames]) => {
+      grouped[category] = skills.filter((skill) => 
+        skillNames.includes(skill.name)
+      );
+    });
+    
+    return grouped;
+  }, []);
+
+  // --- Animation Variants ---
+  
   const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 0.6,
         staggerChildren: 0.1,
+        delayChildren: 0.2,
       },
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: easeOut,
-      },
-    },
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0, y: -30 },
+  const categoryVariants = {
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: easeOut,
-      },
+      transition: { duration: 0.5 }
     },
   };
 
   return (
-    <motion.div
-      id="skills"
-      className="w-full py-16 px-4 sm:px-6 lg:px-8"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <motion.div className="text-center mb-12" variants={titleVariants}>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            My{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Skills
-            </span>
+    <section id="skills" className="w-full py-24 px-4 overflow-hidden relative">
+      {/* Background Decor - Optional subtle gradient blob */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-6xl pointer-events-none opacity-20 dark:opacity-10">
+        <div className="absolute top-[20%] left-[20%] w-72 h-72 bg-blue-500 rounded-full blur-[100px]" />
+        <div className="absolute bottom-[20%] right-[20%] w-72 h-72 bg-purple-500 rounded-full blur-[100px]" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16 space-y-4"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Tech <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Stack</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Technologies and tools I work with to bring ideas to life
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            A curated list of technologies I use to build performant and scalable web applications.
           </p>
         </motion.div>
 
-        <motion.div variants={itemVariants}>
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            plugins={[
-              Autoplay({
-                delay: 2000,
-                stopOnInteraction: true,
-              }),
-            ]}
-            className="w-full max-w-6xl mx-auto"
-          >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {skills.map((skill, index) => (
-                <CarouselItem
-                  key={skill.name}
-                  className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
-                >
-                  <motion.div
-                    className="p-1"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
-                    viewport={{ once: true }}
-                  >
-                    <Card className="border-2 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-lg dark:hover:shadow-blue-500/25 group">
-                      <CardContent className="flex flex-col items-center justify-center p-4 h-32">
-                        <div className="relative w-12 h-12 mb-3 group-hover:scale-110 transition-transform duration-300">
-                          <Image
-                            src={skill.icon || "/placeholder.svg"}
-                            alt={skill.name}
-                            fill
-                            className="object-contain"
-                            sizes="48px"
-                          />
-                        </div>
-                        <span className="text-sm font-medium text-center text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                          {skill.name}
-                        </span>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+        {/* Categories Grid */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="space-y-12"
+        >
+          {Object.entries(groupedSkills).map(([category, categorySkills]) => (
+            <motion.div key={category} variants={categoryVariants} className="space-y-6">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 border-l-4 border-blue-500 pl-4">
+                {category}
+              </h3>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                {categorySkills.map((skill) => (
+                  <SkillPill key={skill.name} skill={skill} />
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
+    </section>
+  );
+};
+
+// --- Sub-Component: Skill Pill ---
+
+const SkillPill = ({ skill }: { skill: { name: string; icon: string } }) => {
+  return (
+    <motion.div
+      whileHover={{ y: -5, scale: 1.02 }}
+      whileTap={{ scale: 0.95 }}
+      className="group relative flex items-center gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 backdrop-blur-sm cursor-default"
+    >
+      <div className="relative w-8 h-8 flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+        {/* Grayscale by default, color on hover */}
+        <Image
+          src={skill.icon || "/placeholder.svg"}
+          alt={skill.name}
+          fill
+          className="object-contain filter group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100"
+          sizes="32px"
+        />
+      </div>
+      <span className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+        {skill.name}
+      </span>
     </motion.div>
   );
 };

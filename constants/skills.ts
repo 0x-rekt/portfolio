@@ -7,10 +7,7 @@ export const skills = [
     name: "TypeScript",
     icon: "/ts.png",
   },
-  {
-    name: "React.js",
-    icon: "/react.png",
-  },
+  
   {
     name: "Next.js",
     icon: "/nextjs.png",
@@ -20,7 +17,7 @@ export const skills = [
     icon: "/tailwind.png",
   },
   {
-    name: "React Native",
+    name: "React.js",
     icon: "/react-native.png",
   },
   {
@@ -58,10 +55,6 @@ export const skills = [
   {
     name: "Docker",
     icon: "/docker.png",
-  },
-  {
-    name: "Solidity",
-    icon: "/solidity.png",
   },
   {
     name: "AWS",

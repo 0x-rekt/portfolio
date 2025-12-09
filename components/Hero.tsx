@@ -1,197 +1,86 @@
 "use client";
 
 import { BackgroundBeams } from "./BackgroundBeams";
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  ExternalLink,
-  Download,
-} from "lucide-react";
+import { Github, Linkedin, Twitter, MapPin } from "lucide-react";
 import Link from "next/link";
-import { backOut, easeOut, motion } from "motion/react";
-import { ContainerTextFlip } from "./TextFlipContainer";
+import { motion } from "framer-motion";
 
 const Hero = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: easeOut,
-      },
-    },
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.5,
-        ease: easeOut,
-      },
-    },
-  };
-
-  const socialVariants = {
-    hidden: { opacity: 0, scale: 0 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.4,
-        ease: backOut,
-      },
-    },
-  };
-
   return (
     <div
-      className="relative w-full min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8"
+      className="relative w-full h-[90vh] flex items-center justify-center px-4"
       id="hero"
     >
-      <motion.div
-        className="relative z-10 max-w-7xl mx-auto w-full"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <div className="flex flex-col items-center text-center space-y-8">
-          <motion.div className="space-y-6 text-center" variants={itemVariants}>
-            <div className="space-y-4">
-              <motion.h1
-                className="text-4xl font-mono font-bold tracking-tight text-gray-900 dark:text-white"
-                variants={itemVariants}
-              >
-                Hi, I am{" "}
-                <motion.span
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                >
-                  Sowdarjya Kolay
-                </motion.span>
-              </motion.h1>
+      <div className="relative z-10 max-w-3xl mx-auto w-full text-center space-y-8">
+        
+        {/* Main Content */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="space-y-6"
+        >
+          {/* Name & Greeting */}
+          <h1 className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Hi, I&apos;m <span className="text-blue-600 dark:text-blue-500">Sowdarjya Kolay</span>
+          </h1>
 
-              <motion.div
-                variants={itemVariants}
-                className="flex justify-center"
-              >
-                <ContainerTextFlip
-                  words={[
-                    "Full Stack Developer",
-                    "App Developer",
-                    "AI/ML Engineer",
-                    "Web3 Enthusiast",
-                  ]}
-                  interval={3000}
-                  className="text-lg md:text-2xl"
-                  textClassName="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text"
-                  animationDuration={600}
-                />
-              </motion.div>
+          {/* Minimal Role & Location Line */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-lg md:text-xl text-gray-600 dark:text-gray-400 font-medium">
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Full Stack Developer & AI Engineer
+            </span>
+            <span className="hidden md:block w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700" />
+            <div className="flex items-center gap-1.5 text-gray-500">
+              <MapPin className="w-4 h-4" />
+              <span>Kolkata, IN</span>
             </div>
+          </div>
 
-            <motion.p
-              className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl"
-              variants={itemVariants}
+          {/* Short Bio */}
+          <p className="max-w-lg mx-auto text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed opacity-55">
+            I build scalable web applications and intelligent systems using Next.js, TypeScript, Python, and other modern technologies.
+          </p>
+        </motion.div>
+
+        {/* Actions & Socials */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-col items-center gap-6"
+        >
+          {/* Minimal Buttons */}
+          <div className="flex gap-4">
+            <Link
+              href="#projects"
+              className="px-6 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-black rounded-md font-medium hover:opacity-90 transition-opacity shadow-lg shadow-gray-200 dark:shadow-none"
             >
-              Passionate about creating innovative solutions and bringing ideas
-              to life through code.
-            </motion.p>
-
-            <motion.p
-              className="text-base text-gray-500 dark:text-gray-500"
-              variants={itemVariants}
+              Work
+            </Link>
+            <a
+              href="/resume.pdf"
+              download="resume.pdf"
+              className="px-6 py-2.5 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-md font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
             >
-              Based in Kolkata, India
-            </motion.p>
+              Resume
+            </a>
+          </div>
 
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              variants={containerVariants}
-            >
-              <motion.div variants={buttonVariants}>
-                <Link
-                  href="#projects"
-                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary dark:text-blue-400 border border-primary dark:border-blue-400 rounded-lg hover:bg-primary hover:text-white dark:hover:bg-blue-400 dark:hover:text-gray-900 transition-colors hover:scale-105 transform duration-200"
-                >
-                  View My Work
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </Link>
-              </motion.div>
-
-              <motion.div variants={buttonVariants}>
-                <a
-                  href="/resume.pdf"
-                  download="resume.pdf"
-                  className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary dark:text-blue-400 border border-primary dark:border-blue-400 rounded-lg hover:bg-primary hover:text-white dark:hover:bg-blue-400 dark:hover:text-gray-900 transition-colors hover:scale-105 transform duration-200"
-                >
-                  Download Resume
-                  <Download className="ml-2 h-4 w-4" />
-                </a>
-              </motion.div>
-            </motion.div>
-
-            <motion.div
-              className="flex items-center justify-center space-x-4"
-              variants={containerVariants}
-            >
-              <motion.div variants={socialVariants}>
-                <Link
-                  href="https://github.com/0x-rekt"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-12 h-12 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors group hover:scale-110 transform duration-200"
-                >
-                  <Github className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                  <span className="sr-only">GitHub Profile</span>
-                </Link>
-              </motion.div>
-
-              <motion.div variants={socialVariants}>
-                <Link
-                  href="https://www.linkedin.com/in/sowdarjya-kolay-616176314"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors group hover:scale-110 transform duration-200"
-                >
-                  <Linkedin className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                  <span className="sr-only">LinkedIn Profile</span>
-                </Link>
-              </motion.div>
-
-              <motion.div variants={socialVariants}>
-                <Link
-                  href="https://x.com/_Kolayyyyyyy__"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-12 h-12 bg-black text-white rounded-full hover:bg-gray-800 transition-colors group hover:scale-110 transform duration-200"
-                >
-                  <Twitter className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                  <span className="sr-only">Twitter Profile</span>
-                </Link>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </motion.div>
+          {/* Icon Only Socials */}
+          <div className="flex items-center gap-6 pt-2">
+            <Link href="https://github.com/0x-rekt" target="_blank" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors hover:scale-110 transform duration-200">
+              <Github className="w-6 h-6" />
+            </Link>
+            <Link href="https://www.linkedin.com/in/sowdarjya-kolay-616176314" target="_blank" className="text-gray-500 hover:text-[#0077b5] transition-colors hover:scale-110 transform duration-200">
+              <Linkedin className="w-6 h-6" />
+            </Link>
+            <Link href="https://x.com/_Kolayyyyyyy__" target="_blank" className="text-gray-500 hover:text-black dark:hover:text-white transition-colors hover:scale-110 transform duration-200">
+              <Twitter className="w-6 h-6 fill-current" />
+            </Link>
+          </div>
+        </motion.div>
+      </div>
 
       <BackgroundBeams />
     </div>
