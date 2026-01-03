@@ -57,7 +57,7 @@ export const projects = [
       "EthPay is a secure, user-friendly dApp for sending ETH with messages and keywords. Built with React, TailwindCSS, ethers.js, and Solidity, it enables fast, private, and transparent Ethereum transfers—optimized for global, real-time use.",
     image: "/ethpay.png",
     liveLink: "https://eth-pay-pearl.vercel.app/",
-    githubLink: "https://github.com/0x-rekt/eth-pay",
+    githubLink: "https://github.com/0x-rekt/EthPay",
     techStack: [
       {
         name: "TypeScript",
