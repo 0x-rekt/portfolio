@@ -1,8 +1,9 @@
 "use client";
 
 import { backOut, easeOut, motion } from "motion/react";
-import { Github, Linkedin, Twitter, Instagram, Heart } from "lucide-react";
+import { Github, Linkedin, Instagram, Heart } from "lucide-react";
 import Link from "next/link";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   const containerVariants = {
@@ -57,7 +58,7 @@ const Footer = () => {
     {
       name: "Twitter",
       href: "https://x.com/_Kolayyyyyyy__",
-      icon: Twitter,
+      icon: FaXTwitter,
       color: "hover:text-black dark:hover:text-white",
     },
     {
@@ -132,7 +133,6 @@ const Footer = () => {
             </motion.p>
           </motion.div>
 
-          {/* Back to Top Button */}
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="group flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"

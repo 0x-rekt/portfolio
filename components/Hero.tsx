@@ -4,6 +4,7 @@ import { BackgroundBeams } from "./BackgroundBeams";
 import { Github, Linkedin, Twitter, MapPin } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Hero = () => {
   return (
@@ -12,20 +13,19 @@ const Hero = () => {
       id="hero"
     >
       <div className="relative z-10 max-w-3xl mx-auto w-full text-center space-y-8">
-        
-        {/* Main Content */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="space-y-6"
         >
-          {/* Name & Greeting */}
           <h1 className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Hi, I&apos;m <span className="text-blue-600 dark:text-blue-500">Sowdarjya Kolay</span>
+            Hi, I'm{" "}
+            <span className="text-blue-600 dark:text-blue-500">
+              Sowdarjya Kolay
+            </span>
           </h1>
 
-          {/* Minimal Role & Location Line */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-lg md:text-xl text-gray-600 dark:text-gray-400 font-medium">
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Full Stack Developer & AI Engineer
@@ -37,20 +37,18 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Short Bio */}
           <p className="max-w-lg mx-auto text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed opacity-55">
-            I build scalable web applications and intelligent systems using Next.js, TypeScript, Python, and other modern technologies.
+            I build scalable web applications and intelligent systems using
+            Next.js, TypeScript, Python, and other modern technologies.
           </p>
         </motion.div>
 
-        {/* Actions & Socials */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col items-center gap-6"
         >
-          {/* Minimal Buttons */}
           <div className="flex gap-4">
             <Link
               href="#projects"
@@ -67,16 +65,27 @@ const Hero = () => {
             </a>
           </div>
 
-          {/* Icon Only Socials */}
           <div className="flex items-center gap-6 pt-2">
-            <Link href="https://github.com/0x-rekt" target="_blank" className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors hover:scale-110 transform duration-200">
+            <Link
+              href="https://github.com/0x-rekt"
+              target="_blank"
+              className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors hover:scale-110 transform duration-200"
+            >
               <Github className="w-6 h-6" />
             </Link>
-            <Link href="https://www.linkedin.com/in/sowdarjya-kolay-616176314" target="_blank" className="text-gray-500 hover:text-[#0077b5] transition-colors hover:scale-110 transform duration-200">
+            <Link
+              href="https://www.linkedin.com/in/sowdarjya-kolay-616176314"
+              target="_blank"
+              className="text-gray-500 hover:text-[#0077b5] transition-colors hover:scale-110 transform duration-200"
+            >
               <Linkedin className="w-6 h-6" />
             </Link>
-            <Link href="https://x.com/_Kolayyyyyyy__" target="_blank" className="text-gray-500 hover:text-black dark:hover:text-white transition-colors hover:scale-110 transform duration-200">
-              <Twitter className="w-6 h-6 fill-current" />
+            <Link
+              href="https://x.com/_Kolayyyyyyy__"
+              target="_blank"
+              className="text-gray-500 hover:text-black dark:hover:text-white transition-colors hover:scale-110 transform duration-200"
+            >
+              <FaXTwitter className="w-6 h-6" />
             </Link>
           </div>
         </motion.div>

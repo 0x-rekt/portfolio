@@ -5,7 +5,7 @@ export const projects = [
       "Jobpair_ai is an AI-powered career tool offering smart resume reviews, tailored roadmaps, cover letter generation, and voice-based mock interviews—built with a secure, scalable tech stack.",
     image: "/jobpair_ai.png",
     liveLink: "https://jobpair-ai.vercel.app/",
-    githubLink: "https://github.com/Sowdarjya/jobpair_ai",
+    githubLink: "https://github.com/0x-rekt/jobpair_ai",
     techStack: [
       {
         name: "TypeScript",
@@ -30,28 +30,24 @@ export const projects = [
     ],
   },
   {
-    name: "LOLcial",
+    name: "FlowForge",
     description:
-      "A modern social media mobile app built with React Native (Expo), Clerk, and Convex, featuring real-time posts, likes, comments, follows, and notifications—designed for a seamless, secure, and interactive user experience.",
-    image: "/lolcial.png",
-    liveLink: "N/A",
-    githubLink: "https://github.com/Sowdarjya/LOLcial",
+      "FlowForge is an AI-powered, real-time collaborative whiteboard platform that transforms ideas into diagrams and diagrams into production-ready code. Built for modern teams who want to accelerate from concept to implementation.",
+    image: "/flowforge.png",
+    liveLink: "https://flowforge-zeta.vercel.app/",
+    githubLink: "https://github.com/0x-rekt/flowforge",
     techStack: [
       {
         name: "TypeScript",
         icon: "/ts.png",
       },
       {
-        name: "React Native",
-        icon: "/react-native.png",
+        name: "Next.js",
+        icon: "/nextjs.png",
       },
       {
-        name: "Clerk",
-        icon: "/clerk.png",
-      },
-      {
-        name: "Convex",
-        icon: "/convex.svg",
+        name: "PostgreSQL",
+        icon: "/postgres.png",
       },
     ],
   },
@@ -61,7 +57,7 @@ export const projects = [
       "EthPay is a secure, user-friendly dApp for sending ETH with messages and keywords. Built with React, TailwindCSS, ethers.js, and Solidity, it enables fast, private, and transparent Ethereum transfers—optimized for global, real-time use.",
     image: "/ethpay.png",
     liveLink: "https://eth-pay-pearl.vercel.app/",
-    githubLink: "https://github.com/Sowdarjya/eth-pay",
+    githubLink: "https://github.com/0x-rekt/eth-pay",
     techStack: [
       {
         name: "TypeScript",
@@ -91,7 +87,7 @@ export const projects = [
       "CoinScope is a crypto tracking web app that monitors 99+ cryptocurrencies with real-time data, price trends, and currency conversion. Built with React, Firebase, and TailwindCSS, it features user authentication, personalized watchlists, and the latest global crypto news—all in a sleek, responsive interface.",
     image: "/coinscope.png",
     liveLink: "https://coin-scope.vercel.app/",
-    githubLink: "https://github.com/Sowdarjya/CoinScope",
+    githubLink: "https://github.com/0x-rekt/CoinScope",
     techStack: [
       {
         name: "JavaScript",
