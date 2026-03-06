@@ -82,28 +82,28 @@ export const projects = [
     ],
   },
   {
-    name: "CoinScope",
+    name: "NeuraDrive",
     description:
-      "CoinScope is a crypto tracking web app that monitors 99+ cryptocurrencies with real-time data, price trends, and currency conversion. Built with React, Firebase, and TailwindCSS, it features user authentication, personalized watchlists, and the latest global crypto news—all in a sleek, responsive interface.",
-    image: "/coinscope.png",
-    liveLink: "https://coin-scope.vercel.app/",
-    githubLink: "https://github.com/0x-rekt/CoinScope",
+      "NeuraDrive is an AI-powered cloud storage platform where your files don't just exist—they evolve through intelligent understanding. Upload documents, chat with them using Google's Gemini AI, perform semantic searches, and collaborate with role-based sharing—all in a sleek, neural-themed interface.",
+    image: "/neuradrive.png",
+    liveLink: "https://neuradrive-teal.vercel.app/",
+    githubLink: "https://github.com/0x-rekt/neuradrive",
     techStack: [
       {
-        name: "JavaScript",
-        icon: "/js.png",
+        name: "TypeScript",
+        icon: "/ts.png",
       },
       {
-        name: "React",
-        icon: "/react.png",
+        name: "Next.js",
+        icon: "/nextjs.png",
       },
       {
-        name: "Tailwind",
-        icon: "/tailwind.png",
+        name: "Prisma",
+        icon: "/prisma.png",
       },
       {
-        name: "Firebase",
-        icon: "/firebase.png",
+        name: "PostgreSQL",
+        icon: "/postgres.png",
       },
     ],
   },
