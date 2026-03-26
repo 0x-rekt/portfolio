@@ -1,139 +1,148 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import { skills } from "../constants/skills";
-// --- Types & Data Organization ---
 
-// We categorize the flat list to make the UI cleaner
-const CATEGORIES = {
-  Frontend: [
-    "JavaScript", "TypeScript", "React.js", "Next.js", 
-    "Tailwind", "React Native"
-  ],
-  Backend: [
-    "Node.js", "Express.js", "Python", "Solidity"
-  ],
-  Database: [
-    "MongoDB", "PostgreSQL", "Firebase"
-  ],
-  "DevOps & Tools": [
-    "Git", "Github", "Docker", "AWS"
-  ]
+const CATEGORIES: Record<string, string[]> = {
+  Languages: ["JavaScript", "TypeScript", "Python"],
+  Frontend: ["React.js", "Next.js", "Tailwind", "React Native"],
+  Backend: ["Node.js", "Express.js", "FastAPI", "Firebase"],
+  "AI / ML": ["Scikit-learn", "Langchain", "Pinecone"],
+  "Database & ORM": ["MongoDB", "PostgreSQL", "Prisma"],
+  "DevOps & Tools": ["Git", "Github", "Docker", "AWS", "GCP"],
 };
 
+const LANG_COLORS: Record<string, string> = {
+  Languages: "#f7df1e",
+  Frontend: "#3178c6",
+  Backend: "#3fb950",
+  "AI / ML": "#e6a817",
+  "Database & ORM": "#58a6ff",
+  "DevOps & Tools": "#8b949e",
+};
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+};
+
+const SkillPill = ({ skill }: { skill: { name: string; icon: string } }) => (
+  <motion.div
+    whileHover={{ y: -3, scale: 1.03 }}
+    whileTap={{ scale: 0.97 }}
+    className="group flex items-center gap-2.5 px-3 py-2.5 rounded-md border border-[#30363d] bg-[#161b22] hover:border-[#58a6ff]/40 hover:bg-[#21262d] transition-all duration-200 cursor-default"
+  >
+    <div className="relative w-5 h-5 shrink-0">
+      <Image
+        src={skill.icon || "/placeholder.svg"}
+        alt={skill.name}
+        fill
+        className="object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-200"
+        sizes="20px"
+      />
+    </div>
+    <span className="text-[13px] font-mono text-[#7d8590] group-hover:text-[#e6edf3] transition-colors duration-200 whitespace-nowrap">
+      {skill.name}
+    </span>
+  </motion.div>
+);
+
 const Skills = () => {
-  // Memoize grouped skills to avoid recalculation on render
   const groupedSkills = useMemo(() => {
     const grouped: Record<string, typeof skills> = {};
-    
     Object.entries(CATEGORIES).forEach(([category, skillNames]) => {
-      grouped[category] = skills.filter((skill) => 
-        skillNames.includes(skill.name)
-      );
+      grouped[category] = skills.filter((s) => skillNames.includes(s.name));
     });
-    
     return grouped;
   }, []);
 
-  // --- Animation Variants ---
-  
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const categoryVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 }
-    },
-  };
-
   return (
-    <section id="skills" className="w-full py-24 px-4 overflow-hidden relative">
-      {/* Background Decor - Optional subtle gradient blob */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-6xl pointer-events-none opacity-20 dark:opacity-10">
-        <div className="absolute top-[20%] left-[20%] w-72 h-72 bg-blue-500 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[20%] right-[20%] w-72 h-72 bg-purple-500 rounded-full blur-[100px]" />
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Header Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 space-y-4"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Tech <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Stack</span>
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            A curated list of technologies I use to build performant and scalable web applications.
-          </p>
-        </motion.div>
-
-        {/* Categories Grid */}
-        <motion.div 
-          variants={containerVariants}
+    <section id="skills" className="w-full bg-[#0d1117] py-16 px-4">
+      <div className="max-w-3xl mx-auto">
+        <motion.div
+          variants={container}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="space-y-12"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          className="space-y-10"
         >
-          {Object.entries(groupedSkills).map(([category, categorySkills]) => (
-            <motion.div key={category} variants={categoryVariants} className="space-y-6">
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 border-l-4 border-blue-500 pl-4">
-                {category}
-              </h3>
-              
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                {categorySkills.map((skill) => (
-                  <SkillPill key={skill.name} skill={skill} />
-                ))}
-              </div>
-            </motion.div>
-          ))}
+          <motion.div variants={fadeUp} className="flex items-center gap-3">
+            <span className="text-[11px] font-mono text-[#484f58] uppercase tracking-widest">
+              package.json
+            </span>
+            <div className="flex-1 h-px bg-[#21262d]" />
+          </motion.div>
+
+          <motion.div variants={fadeUp}>
+            <h2 className="text-3xl sm:text-4xl font-bold font-mono text-[#e6edf3]">
+              Tech{" "}
+              <span className="relative text-[#2f81f7]">
+                Stack
+                <span
+                  aria-hidden
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-linear-to-r from-[#2f81f7]/0 via-[#2f81f7] to-[#2f81f7]/0"
+                />
+              </span>
+            </h2>
+            <p className="mt-3 text-sm font-mono text-[#7d8590] leading-relaxed max-w-lg">
+              Technologies I use to build scalable web apps and intelligent
+              systems.
+            </p>
+          </motion.div>
+
+          <motion.div variants={container} className="space-y-6">
+            {Object.entries(groupedSkills).map(([category, categorySkills]) => {
+              if (!categorySkills.length) return null;
+              const color = LANG_COLORS[category] ?? "#8b949e";
+              return (
+                <motion.div
+                  key={category}
+                  variants={fadeUp}
+                  className="rounded-lg border border-[#30363d] bg-[#161b22]/60 overflow-hidden"
+                >
+                  <div className="flex items-center gap-2.5 px-4 py-2.5 border-b border-[#21262d] bg-[#161b22]">
+                    <span
+                      className="w-2 h-2 rounded-full shrink-0"
+                      style={{ backgroundColor: color }}
+                    />
+                    <span className="text-[12px] font-mono text-[#8b949e]">
+                      {category}
+                    </span>
+                    <span className="ml-auto text-[11px] font-mono text-[#484f58]">
+                      {categorySkills.length} packages
+                    </span>
+                  </div>
+
+                  <div className="p-4 flex flex-wrap gap-2">
+                    {categorySkills.map((skill) => (
+                      <SkillPill key={skill.name} skill={skill} />
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            className="flex items-center gap-3 pt-2"
+          >
+            <div className="flex-1 h-px bg-[#21262d]" />
+            <div className="flex items-center gap-2 text-[11px] font-mono text-[#484f58]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950] animate-pulse" />
+              {skills.length} dependencies installed
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
-  );
-};
-
-// --- Sub-Component: Skill Pill ---
-
-const SkillPill = ({ skill }: { skill: { name: string; icon: string } }) => {
-  return (
-    <motion.div
-      whileHover={{ y: -5, scale: 1.02 }}
-      whileTap={{ scale: 0.95 }}
-      className="group relative flex items-center gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-gray-900/50 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 backdrop-blur-sm cursor-default"
-    >
-      <div className="relative w-8 h-8 flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
-        {/* Grayscale by default, color on hover */}
-        <Image
-          src={skill.icon || "/placeholder.svg"}
-          alt={skill.name}
-          fill
-          className="object-contain filter group-hover:grayscale-0 transition-all duration-300 opacity-80 group-hover:opacity-100"
-          sizes="32px"
-        />
-      </div>
-      <span className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
-        {skill.name}
-      </span>
-    </motion.div>
   );
 };
 

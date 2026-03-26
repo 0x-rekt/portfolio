@@ -7,7 +7,7 @@ export const skills = [
     name: "TypeScript",
     icon: "/ts.png",
   },
-  
+
   {
     name: "Next.js",
     icon: "/nextjs.png",
@@ -45,6 +45,10 @@ export const skills = [
     icon: "/postgres.png",
   },
   {
+    name: "Prisma",
+    icon: "/prisma.png",
+  },
+  {
     name: "Firebase",
     icon: "/firebase.png",
   },
@@ -53,11 +57,31 @@ export const skills = [
     icon: "/python.png",
   },
   {
+    name: "FastAPI",
+    icon: "/fastapi.svg",
+  },
+  {
+    name: "Scikit-learn",
+    icon: "/scikit-learn.png",
+  },
+  {
+    name: "Langchain",
+    icon: "/langchain.png",
+  },
+  {
+    name: "Pinecone",
+    icon: "/pinecone.png",
+  },
+  {
     name: "Docker",
     icon: "/docker.png",
   },
   {
     name: "AWS",
     icon: "/aws.png",
+  },
+  {
+    name: "GCP",
+    icon: "/GCP.png",
   },
 ];

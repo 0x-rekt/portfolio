@@ -52,35 +52,32 @@ export const projects = [
     ],
   },
   {
-    name: "EthPay",
+    name: "D2P",
     description:
-      "EthPay is a secure, user-friendly dApp for sending ETH with messages and keywords. Built with React, TailwindCSS, ethers.js, and Solidity, it enables fast, private, and transparent Ethereum transfers—optimized for global, real-time use.",
-    image: "/ethpay.png",
-    liveLink: "https://eth-pay-pearl.vercel.app/",
-    githubLink: "https://github.com/0x-rekt/EthPay",
+      "D2P is an AI-powered code review platform that acts as an automated senior engineer for GitHub pull requests. It analyzes diffs for logic flaws, security risks, and performance issues using Gemini 2.5 Flash, categorizes findings by severity, and enables one-click fixes with automatic PR creation.",
+    image: "/d2p.png",
+    liveLink: "https://d2p-ai.vercel.app/",
+    githubLink: "https://github.com/0x-rekt/D2P",
     techStack: [
       {
         name: "TypeScript",
         icon: "/ts.png",
       },
       {
-        name: "React",
-        icon: "/react.png",
+        name: "Next.js",
+        icon: "/nextjs.png",
       },
       {
-        name: "Tailwind",
-        icon: "/tailwind.png",
+        name: "PostgreSQL",
+        icon: "/postgres.png",
       },
       {
-        name: "Ethers.js",
-        icon: "/ethers.svg",
-      },
-      {
-        name: "Solidity",
-        icon: "/solidity.png",
+        name: "Prisma",
+        icon: "/prisma.png",
       },
     ],
   },
+
   {
     name: "NeuraDrive",
     description:
@@ -98,12 +95,20 @@ export const projects = [
         icon: "/nextjs.png",
       },
       {
+        name: "AWS",
+        icon: "/aws.png",
+      },
+      {
         name: "Prisma",
         icon: "/prisma.png",
       },
       {
         name: "PostgreSQL",
         icon: "/postgres.png",
+      },
+      {
+        name: "Pinecone",
+        icon: "/pinecone.png",
       },
     ],
   },

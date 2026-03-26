@@ -1,93 +1,115 @@
 "use client";
 
-import { easeOut, motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
+import { HeroHighlight } from "@/components/ui/hero-highlight";
+import { GitCommitHorizontal, Code2, Cpu } from "lucide-react";
+
+const tags = [
+  { label: "B.Tech · ECE", icon: Cpu },
+  { label: "Full Stack", icon: Code2 },
+  { label: "AI Engineer", icon: GitCommitHorizontal },
+];
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
 
 export default function AboutSection() {
   return (
-    <motion.section
-      id="about"
-      className="max-w-4xl mx-auto py-24 px-4 sm:px-6 lg:px-8"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: easeOut }}
-    >
-      <div className="text-center space-y-10">
-        
-        {/* Title */}
-        <motion.h2
-          className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white"
-          initial={{ scale: 0.9, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          About{" "}
-          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Me
-          </span>
-        </motion.h2>
-
-        {/* Content Paragraph */}
-        <div className="relative max-w-4xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed font-light space-y-6">
-          
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            I am a <span className="text-gray-900 dark:text-white font-bold">Full Stack Developer</span> & 
-            <span className="text-gray-900 dark:text-white font-bold"> AI Engineer</span> currently pursuing my 
-            <span className="underline decoration-blue-500/50 decoration-2 underline-offset-4 mx-1 text-gray-900 dark:text-white font-medium">B.Tech in Electronics and Communication Engineering</span>.
-            I bridge the gap between hardware logic and software scalability.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            My core expertise lies in architecting web and mobile ecosystems using 
-            <span className="text-blue-600 dark:text-blue-400 font-medium"> Next.js</span>, 
-            <span className="text-blue-600 dark:text-blue-400 font-medium"> TypeScript</span>, and 
-            <span className="text-blue-600 dark:text-blue-400 font-medium"> React Native</span>. 
-            On the backend, I build robust data pipelines with 
-            <span className="text-green-600 dark:text-green-400 font-medium"> Node.js</span>, 
-            <span className="text-green-600 dark:text-green-400 font-medium"> Python</span>, and 
-            <span className="text-green-600 dark:text-green-400 font-medium"> PostgreSQL/MongoDB</span>.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
-             
-            I love competing in <span className="text-gray-900 dark:text-white font-semibold">Hackathons</span> to build innovative solutions under pressure.
-          </motion.p>
-
-        </div>
-
-        {/* Decoration Dots */}
+    <section id="about" className="w-full bg-[#0d1117] py-16 px-4">
+      <div className="max-w-3xl mx-auto">
         <motion.div
-          className="flex justify-center space-x-3 pt-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          className="space-y-8"
         >
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="w-2 h-2 bg-blue-500 rounded-full"
-              animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.2, 1] }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                delay: i * 0.2,
-              }}
-            />
-          ))}
+          <motion.div variants={fadeUp} className="flex items-center gap-3">
+            <span className="text-xs font-mono text-[#7d8590] uppercase tracking-widest">
+              README.md
+            </span>
+            <div className="flex-1 h-[1px] bg-[#30363d]" />
+          </motion.div>
+
+          <motion.div variants={fadeUp}>
+            <HeroHighlight containerClassName="!h-[8rem] !bg-[#0d1117] border border-[#30363d] rounded-xl overflow-hidden w-full">
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-[#e6edf3]">
+                About{" "}
+                <span className="text-[#2f81f7] relative">
+                  Me
+                  <span className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-gradient-to-r from-[#2f81f7]/0 via-[#2f81f7] to-[#2f81f7]/0" />
+                </span>
+              </h2>
+            </HeroHighlight>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-wrap items-center gap-3"
+          >
+            {tags.map(({ label, icon: Icon }) => (
+              <div
+                key={label}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#30363d] bg-[#21262d]/70 text-[#c9d1d9] text-xs font-mono shadow-sm"
+              >
+                <Icon className="w-3.5 h-3.5 text-[#7d8590]" />
+                {label}
+              </div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            variants={container}
+            className="space-y-5 text-sm md:text-base text-[#8b949e] leading-relaxed"
+          >
+            <motion.p variants={fadeUp}>
+              I&apos;m a{" "}
+              <span className="text-[#e6edf3] font-medium">
+                Full Stack Developer
+              </span>{" "}
+              &amp;{" "}
+              <span className="text-[#e6edf3] font-medium">AI Engineer</span>{" "}
+              pursuing my{" "}
+              <span className="text-[#e6edf3] font-medium">
+                B.Tech in Electronics and Communication Engineering
+              </span>
+              . I bridge the gap between hardware logic and software
+              scalability.
+            </motion.p>
+
+            <motion.p variants={fadeUp}>
+              My core expertise lies in architecting web and mobile ecosystems.
+              On the backend I build robust data pipelines and intelligent
+              systems — whatever the problem demands.
+            </motion.p>
+
+            <motion.p variants={fadeUp}>
+              I love competing in{" "}
+              <span className="text-[#e6edf3] font-medium">Hackathons</span> to
+              build innovative solutions under pressure and pushing what&apos;s
+              possible in short sprints.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            className="flex items-center gap-3 pt-6"
+          >
+            <div className="flex-1 h-[1px] bg-[#30363d]" />
+            <div className="flex items-center gap-2 text-xs font-mono text-[#7d8590]">
+              <span className="w-2 h-2 rounded-full bg-[#3fb950] animate-pulse" />
+              actively building
+            </div>
+          </motion.div>
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 }
