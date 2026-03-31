@@ -16,16 +16,20 @@ export const projects = [
         icon: "/nextjs.png",
       },
       {
-        name: "Tailwind",
-        icon: "/tailwind.png",
+        name: "Langchain",
+        icon: "/langchain.png",
       },
       {
         name: "PostgreSQL",
         icon: "/postgres.png",
       },
       {
-        name: "Clerk",
-        icon: "/clerk.png",
+        name: "Prisma",
+        icon: "/prisma.png",
+      },
+      {
+        name: "Tailwind CSS",
+        icon: "/tailwind.png",
       },
     ],
   },
@@ -97,6 +101,10 @@ export const projects = [
       {
         name: "AWS",
         icon: "/aws.png",
+      },
+      {
+        name: "Langchain",
+        icon: "/langchain.png",
       },
       {
         name: "Prisma",
