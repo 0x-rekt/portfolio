@@ -60,7 +60,7 @@ export const projects = [
     description:
       "D2P is an AI-powered code review platform that acts as an automated senior engineer for GitHub pull requests. It analyzes diffs for logic flaws, security risks, and performance issues using Gemini 2.5 Flash, categorizes findings by severity, and enables one-click fixes with automatic PR creation.",
     image: "/d2p.png",
-    liveLink: "https://d2p-ai.vercel.app/",
+    liveLink: "https://d2p-beta.vercel.app/",
     githubLink: "https://github.com/0x-rekt/D2P",
     techStack: [
       {
