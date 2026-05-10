@@ -4,8 +4,8 @@ export const projects = [
     description:
       "Jobpair_ai is an AI-powered career tool offering smart resume reviews, tailored roadmaps, cover letter generation, and voice-based mock interviews—built with a secure, scalable tech stack.",
     image: "/jobpair_ai.png",
-    liveLink: "https://jobpair-ai.vercel.app/",
-    githubLink: "https://github.com/0x-rekt/jobpair_ai",
+    liveLink: "https://jobpair-ai-beta.vercel.app/",
+    githubLink: "https://github.com/0x-rekt/jobpair-ai",
     techStack: [
       {
         name: "TypeScript",
