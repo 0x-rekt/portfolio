@@ -67,10 +67,10 @@ const entries: Entry[] = [
     description:
       "Achieved second place in Gnosis Week competition at SCCSE-AOT, demonstrating technical excellence.",
     tag: "Runner-up",
-    tagColor: "#e3b341",
+    tagColor: "#a371f7",
     icon: Trophy,
-    iconColor: "#e3b341",
-    dotColor: "#e3b341",
+    iconColor: "#a371f7",
+    dotColor: "#a371f7",
   },
   {
     date: "May 2025",
@@ -103,10 +103,10 @@ const entries: Entry[] = [
     description:
       "Worked as an intern at BlockSeBlock, gaining hands-on experience in blockchain and web development.",
     tag: "Internship",
-    tagColor: "#3fb950",
+    tagColor: "#1abc9c",
     icon: Code,
-    iconColor: "#3fb950",
-    dotColor: "#3fb950",
+    iconColor: "#1abc9c",
+    dotColor: "#1abc9c",
   },
   {
     date: "Sep 2025 – Present",
@@ -127,10 +127,10 @@ const entries: Entry[] = [
     description:
       "Active core member of the tech team at SC-ECE, involved in technical projects and departmental activities.",
     tag: "Technical",
-    tagColor: "#f78166",
+    tagColor: "#ff6b9d",
     icon: Code,
-    iconColor: "#f78166",
-    dotColor: "#f78166",
+    iconColor: "#ff6b9d",
+    dotColor: "#ff6b9d",
   },
   {
     date: "Mar 2026",
@@ -139,10 +139,10 @@ const entries: Entry[] = [
     description:
       "Selected as a finalist in the Diversion Hackathon, competing against top engineering teams across the region.",
     tag: "Finalist",
-    tagColor: "#f78166",
+    tagColor: "#ff9f43",
     icon: Zap,
-    iconColor: "#f78166",
-    dotColor: "#f78166",
+    iconColor: "#ff9f43",
+    dotColor: "#ff9f43",
   },
   {
     date: "Mar 2026",
@@ -151,10 +151,22 @@ const entries: Entry[] = [
     description:
       "Reached the finals of Binary V2 Hackathon, showcasing advanced problem-solving and full-stack development skills.",
     tag: "Finalist",
-    tagColor: "#f78166",
+    tagColor: "#f85959",
     icon: Zap,
-    iconColor: "#f78166",
-    dotColor: "#f78166",
+    iconColor: "#f85959",
+    dotColor: "#f85959",
+  },
+  {
+    date: "Apr 2026",
+    hash: "m7d3f19",
+    title: "Hacktropica finalist",
+    description:
+      "Selected as a finalist in Hacktropica, competing against top engineering teams across the region.",
+    tag: "Finalist",
+    tagColor: "#ffd93d",
+    icon: Zap,
+    iconColor: "#ffd93d",
+    dotColor: "#ffd93d",
   },
 ];
 
