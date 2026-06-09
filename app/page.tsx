@@ -1,18 +1,16 @@
-import AboutSection from "@/components/About";
-import Experience from "@/components/Experience";
+import ExperienceTimeline from "@/components/ExperienceTimeline";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
+import TechnicalStack from "@/components/TechnicalStack";
 import React from "react";
 
 const Home = () => {
   return (
     <div>
       <Hero />
-      <AboutSection />
-      <Skills />
+      <TechnicalStack />
       <Projects />
-      <Experience />
+      <ExperienceTimeline />
     </div>
   );
 };

@@ -69,8 +69,20 @@ export const skills = [
     icon: "/langchain.png",
   },
   {
+    name: "Hugging Face",
+    icon: "/hf.png",
+  },
+  {
     name: "Pinecone",
     icon: "/pinecone.png",
+  },
+  {
+    name: "Shell Scripting",
+    icon: "/shell.png",
+  },
+  {
+    name: "CI/CD",
+    icon: "/actions.png",
   },
   {
     name: "Docker",

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import { ThemeProvider } from "@/components/theme-proider";
 import { JetBrains_Mono } from "next/font/google";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -27,11 +26,9 @@ export default function RootLayout({
       className={`${jetbrainsMono.variable}`}
     >
       <body className="font-mono">
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          <Navbar />
+          <Header />
           {children}
           <Footer />
-        </ThemeProvider>
       </body>
     </html>
   );

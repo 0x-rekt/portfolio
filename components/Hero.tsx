@@ -1,443 +1,301 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Github, Linkedin, MapPin, BookOpen, Users } from "lucide-react";
-import Link from "next/link";
-import { motion, type Variants } from "framer-motion";
-import { FaXTwitter } from "react-icons/fa6";
-import { DottedGlowBackground } from "@/components/ui/dotted-glow-background";
+import React, { useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
+import { ArrowRight, Binary, Cpu, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { FaXTwitter } from 'react-icons/fa6';
 
-interface GHUser {
-  public_repos: number;
-  followers: number;
-  following: number;
-}
+export default function Hero() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-interface ContributionDay {
-  date: string;
-  count: number;
-  level: 0 | 1 | 2 | 3 | 4;
-}
+  // Background particle mesh animation
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-interface ContributionWeek {
-  contributionDays: ContributionDay[];
-}
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-const GH_USERNAME = "0x-rekt";
+    let animationFrameId: number;
+    let width = (canvas.width = canvas.offsetWidth);
+    let height = (canvas.height = canvas.offsetHeight);
 
-const LEVEL_COLOR: Record<number, string> = {
-  0: "#161b22",
-  1: "#0e4429",
-  2: "#006d32",
-  3: "#26a641",
-  4: "#39d353",
-};
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      alpha: number;
+    }> = [];
 
-const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+    const maxParticles = Math.min(50, Math.floor((width * height) / 25000));
 
-const DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
+    for (let i = 0; i < maxParticles; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: Math.random() * 1.5 + 1,
+        alpha: Math.random() * 0.5 + 0.2,
+      });
+    }
 
-const StatPill = ({
-  icon: Icon,
-  label,
-  value,
-}: {
-  icon: React.ElementType;
-  label: string;
-  value: number | string;
-}) => (
-  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#161b22] border border-[#30363d] text-[#8b949e] text-xs font-mono">
-    <Icon className="w-3.5 h-3.5 text-[#7d8590]" />
-    <span className="text-[#e6edf3] font-semibold">{value}</span>
-    <span>{label}</span>
-  </div>
-);
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
 
-const ContributionGraph = ({
-  weeks,
-  totalCount,
-}: {
-  weeks: ContributionWeek[];
-  totalCount: number;
-}) => {
-  const [hoveredDay, setHoveredDay] = useState<{
-    date: string;
-    count: number;
-  } | null>(null);
+      // Draw dark high-contrast lines between nodes
+      for (let i = 0; i < particles.length; i++) {
+        const p1 = particles[i];
 
-  const monthLabels: { label: string; pct: number }[] = [];
-  weeks.forEach((week, wi) => {
-    const firstDay = week.contributionDays.find((d) => d.date);
-    if (firstDay) {
-      const d = new Date(firstDay.date);
-      if (d.getDate() <= 7) {
-        const last = monthLabels[monthLabels.length - 1];
-        if (!last || last.label !== MONTHS[d.getMonth()]) {
-          monthLabels.push({
-            label: MONTHS[d.getMonth()],
-            pct: (wi / weeks.length) * 100,
-          });
+        // Move particle
+        p1.x += p1.vx;
+        p1.y += p1.vy;
+
+        // Bounce bounds
+        if (p1.x < 0 || p1.x > width) p1.vx *= -1;
+        if (p1.y < 0 || p1.y > height) p1.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${p1.alpha * 0.35})`;
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+
+          if (dist < 150) {
+            const lineAlpha = (1 - dist / 150) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${lineAlpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
         }
       }
-    }
-  });
 
-  return (
-    <div className="w-full">
-      <p className="text-[11px] text-[#484f58] font-mono mb-2 text-right">
-        {totalCount.toLocaleString()} contributions in the last year
-      </p>
+      animationFrameId = requestAnimationFrame(draw);
+    };
 
-      <div className="flex w-full gap-1.5">
-        <div
-          className="flex flex-col justify-around shrink-0 pb-0.5"
-          style={{ width: 22 }}
-        >
-          {DAY_LABELS.map((d, i) => (
-            <span
-              key={i}
-              className="text-[9px] text-[#484f58] font-mono text-right leading-none select-none"
-            >
-              {d}
-            </span>
-          ))}
-        </div>
+    draw();
 
-        <div className="flex-1 min-w-0 flex flex-col gap-0.5">
-          <div className="relative h-4 w-full">
-            {monthLabels.map(({ label, pct }) => (
-              <span
-                key={`${label}-${pct}`}
-                className="absolute text-[9px] text-[#7d8590] font-mono select-none"
-                style={{ left: `${pct}%` }}
-              >
-                {label}
-              </span>
-            ))}
-          </div>
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    };
 
-          <div
-            className="grid w-full relative"
-            style={{
-              gridTemplateColumns: `repeat(${weeks.length}, 1fr)`,
-              gridTemplateRows: "repeat(7, 1fr)",
-              gap: "2px",
-              aspectRatio: `${weeks.length} / 7`,
-            }}
-          >
-            {Array.from({ length: 7 }, (_, di) =>
-              weeks.map((week, wi) => {
-                const day = week.contributionDays[di];
-                if (!day || !day.date) {
-                  return (
-                    <div
-                      key={`${wi}-${di}`}
-                      className="rounded-[2px]"
-                      style={{
-                        backgroundColor: LEVEL_COLOR[0],
-                        outline: "1px solid rgba(255,255,255,0.04)",
-                      }}
-                    />
-                  );
-                }
-                const dateStr = new Date(day.date).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                });
-                return (
-                  <div
-                    key={`${wi}-${di}`}
-                    onMouseEnter={() =>
-                      setHoveredDay({ date: dateStr, count: day.count })
-                    }
-                    onMouseLeave={() => setHoveredDay(null)}
-                    className="rounded-[2px] cursor-default transition-transform hover:scale-125 hover:z-20 relative"
-                    style={{
-                      backgroundColor: LEVEL_COLOR[day.level],
-                      outline: "1px solid rgba(255,255,255,0.06)",
-                    }}
-                  />
-                );
-              }),
-            )}
+    window.addEventListener('resize', handleResize);
 
-            {hoveredDay && (
-              <div
-                className="absolute bg-[#162338] border border-[#30363d] rounded-lg px-3 py-2 text-[12px] font-mono text-[#8b949e] whitespace-nowrap pointer-events-none z-50"
-                style={{
-                  bottom: "100%",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  marginBottom: "8px",
-                }}
-              >
-                <div className="text-[#e6edf3] font-semibold">
-                  {hoveredDay.count} contribution
-                  {hoveredDay.count !== 1 ? "s" : ""}
-                </div>
-                <div className="text-[11px] text-[#7d8590]">
-                  {hoveredDay.date}
-                </div>
-                <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent"
-                  style={{ borderTopColor: "#162338" }}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-end gap-1.5 mt-2">
-        <span className="text-[10px] text-[#484f58] font-mono select-none">
-          Less
-        </span>
-        {[0, 1, 2, 3, 4].map((l) => (
-          <div
-            key={l}
-            className="rounded-[2px] w-2.5 h-2.5"
-            style={{
-              backgroundColor: LEVEL_COLOR[l],
-              outline: "1px solid rgba(255,255,255,0.06)",
-            }}
-          />
-        ))}
-        <span className="text-[10px] text-[#484f58] font-mono select-none">
-          More
-        </span>
-      </div>
-    </div>
-  );
-};
-
-const Hero = () => {
-  const [ghUser, setGhUser] = useState<GHUser | null>(null);
-  const [contribWeeks, setContribWeeks] = useState<ContributionWeek[]>([]);
-  const [totalContribs, setTotalContribs] = useState(0);
-  const [loadingGraph, setLoadingGraph] = useState(true);
-
-  useEffect(() => {
-    fetch(`https://api.github.com/users/${GH_USERNAME}`)
-      .then((r) => r.json())
-      .then(setGhUser)
-      .catch(() => {});
-
-    fetch(
-      `https://github-contributions-api.jogruber.de/v4/${GH_USERNAME}?y=last`,
-    )
-      .then((r) => r.json())
-      .then((data) => {
-        const days: ContributionDay[] = data.contributions ?? [];
-        const total: number = Object.values(
-          (data.total ?? {}) as Record<string, number>,
-        ).reduce((acc, v) => acc + v, 0);
-
-        const weeks: ContributionWeek[] = [];
-        let week: ContributionDay[] = [];
-        days.forEach((day, i) => {
-          const dow = new Date(day.date).getDay();
-          if (i === 0 && dow !== 0) {
-            for (let p = 0; p < dow; p++)
-              week.push({ date: "", count: 0, level: 0 });
-          }
-          week.push(day);
-          if (week.length === 7) {
-            weeks.push({ contributionDays: week });
-            week = [];
-          }
-        });
-        if (week.length > 0) {
-          while (week.length < 7) week.push({ date: "", count: 0, level: 0 });
-          weeks.push({ contributionDays: week });
-        }
-
-        setContribWeeks(weeks);
-        setTotalContribs(total);
-        setLoadingGraph(false);
-      })
-      .catch(() => setLoadingGraph(false));
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
-  const containerVariants: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.08 } },
-  };
-
-  const item: Variants = {
-    hidden: { opacity: 0, y: 12 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
-    <div
+    <section
       id="hero"
-      className="relative w-full min-h-[90vh] flex items-center justify-center px-4 py-12 bg-[#0d1117] overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 bg-transparent"
     >
-      <DottedGlowBackground
-        className="absolute inset-0 z-0"
-        gap={24}
-        radius={1.5}
-        darkColor="rgba(48, 54, 61, 0.9)"
-        darkGlowColor="rgba(47, 129, 247, 0.75)"
-        opacity={0.55}
-        speedMin={0.3}
-        speedMax={0.9}
-        speedScale={0.7}
+      {/* Decorative Canvas Micro-Network */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-40"
       />
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-30 left-1/2 -translate-x-1/2 w-150 h-100 rounded-full z-1"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(47,129,247,0.10) 0%, transparent 70%)",
-        }}
-      />
+      {/* Grid Overlay Line Effects */}
+      <div className="absolute inset-0 engineering-grid pointer-events-none opacity-50" />
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="show"
-        className="relative z-10 max-w-3xl mx-auto w-full space-y-8"
-      >
-        <motion.div variants={item} className="flex justify-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#30363d] bg-[#21262d]/70 text-[#8b949e] text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-[#3fb950] animate-pulse" />
-            Open to new opportunities
-          </div>
-        </motion.div>
-
-        <motion.div variants={item} className="text-center space-y-3">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[#e6edf3] leading-tight">
-            Hi, I&apos;m{" "}
-            <span className="text-[#2f81f7] relative">
-              Sowdarjya Kolay
-              <span
-                aria-hidden
-                className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-linear-to-r from-[#2f81f7]/0 via-[#2f81f7] to-[#2f81f7]/0"
-              />
-            </span>
-          </h1>
-
-          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 text-sm md:text-base text-[#8b949e] font-mono mt-6">
-            <span className="text-[#e6edf3]">
-              Full Stack Developer &amp; AI Engineer
-            </span>
-            <span className="hidden md:block text-[#30363d]">·</span>
-            <div className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-[#7d8590]" />
-              <span>Kolkata, IN</span>
-            </div>
-          </div>
-
-          <p className="max-w-lg mx-auto text-sm text-[#7d8590] leading-relaxed">
-            Building scalable web apps and intelligent systems with Next.js,
-            TypeScript, Python, and whatever the problem demands.
-          </p>
-        </motion.div>
-
-        <motion.div
-          variants={item}
-          className="flex items-center justify-center gap-6"
-        >
-          <Link
-            href={`https://github.com/${GH_USERNAME}`}
-            target="_blank"
-            className="text-[#7d8590] hover:text-[#e6edf3] transition-colors hover:scale-110 transform duration-200"
-            aria-label="GitHub"
-          >
-            <Github className="w-5 h-5" />
-          </Link>
-          <Link
-            href="https://www.linkedin.com/in/sowdarjya-kolay-616176314"
-            target="_blank"
-            className="text-[#7d8590] hover:text-[#e6edf3] transition-colors hover:scale-110 transform duration-200"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="w-5 h-5" />
-          </Link>
-          <Link
-            href="https://x.com/_Kolayyyyyyy__"
-            target="_blank"
-            className="text-[#7d8590] hover:text-[#e6edf3] transition-colors hover:scale-110 transform duration-200"
-            aria-label="X / Twitter"
-          >
-            <FaXTwitter className="w-5 h-5" />
-          </Link>
-        </motion.div>
-
-        {ghUser && (
+      <div className="relative max-w-7xl mx-auto px-6 md:px-12 z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        {/* Main Hero Copy - Column Left */}
+        <div className="lg:col-span-7 flex flex-col items-start gap-6 text-left">
+          {/* Availability Status Badge */}
           <motion.div
-            variants={item}
-            className="flex flex-wrap items-center justify-center gap-2"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#CCFF00] border-2 border-white text-[10px] text-black font-mono font-bold tracking-widest uppercase shadow-[2px_2px_0px_#FFF]"
           >
-            <StatPill
-              icon={BookOpen}
-              label="repos"
-              value={ghUser.public_repos}
-            />
-            <StatPill icon={Users} label="followers" value={ghUser.followers} />
-            <StatPill icon={Users} label="following" value={ghUser.following} />
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-black"></span>
+            </span>
+            Available for Hire
           </motion.div>
-        )}
 
-        <motion.div
-          variants={item}
-          className="flex flex-wrap items-center justify-center gap-3"
-        >
-          <Link
-            href="#projects"
-            className="px-5 py-2 bg-[#238636] border border-[#2ea043]/60 text-white rounded-md text-sm font-medium hover:bg-[#2ea043] transition-colors shadow-sm"
-          >
-            View Work
-          </Link>
-          <a
-            href="/resume.pdf"
-            download="resume.pdf"
-            className="px-5 py-2 bg-[#21262d] border border-[#30363d] text-[#c9d1d9] rounded-md text-sm font-medium hover:bg-[#30363d] hover:border-[#8b949e] transition-colors shadow-sm"
-          >
-            Resume
-          </a>
-        </motion.div>
+          {/* Name Header */}
+          <div className="space-y-4 border-b-2 border-white/20 pb-6 w-full text-left">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-[0.4em] text-zinc-400">ENGINEERING INTERFACE</span>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+              className="text-white font-display font-extrabold text-5xl md:text-7xl lg:text-[80px] tracking-[-0.04em] leading-[0.9] uppercase"
+            >
+              Sowdarjya Kolay<span className="text-[#CCFF00] drop-shadow-[2px_2px_0px_#FFF]">.</span>
+            </motion.h1>
 
-        <motion.div
-          variants={item}
-          className="p-4 rounded-lg border border-[#30363d] bg-[#161b22]/60"
-        >
-          {loadingGraph ? (
-            <div className="space-y-2">
-              <div className="h-3 w-52 ml-auto rounded bg-[#21262d] animate-pulse" />
-              <div className="h-28 w-full rounded bg-[#21262d] animate-pulse" />
-              <div className="h-3 w-32 ml-auto rounded bg-[#21262d] animate-pulse" />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="inline-flex items-center gap-2 py-1 px-2.5 bg-zinc-900 border-2 border-white/20"
+            >
+              <Cpu className="w-3.5 h-3.5 text-[#CCFF00]" />
+              <span className="font-mono text-[11px] text-white uppercase tracking-wider font-bold">AI Engineer & Full-Stack SDE</span>
+            </motion.div>
+          </div>
+
+          {/* Introduction Paragraph */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+            className="text-zinc-300 font-sans text-base md:text-lg max-w-xl leading-relaxed font-normal"
+          >
+            Building scalable web applications and integrating advanced AI capabilities. Specializing in high-performance architectures and intelligent systems. Combining a deep electrical foundation with software engineering excellence.
+          </motion.p>
+
+          {/* Academic Tag */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xs text-black font-mono flex items-center gap-2 bg-[#CCFF00] px-3 py-1.5 border-2 border-white font-bold shadow-[2px_2px_0px_#FFF]"
+          >
+            <Binary className="w-3.5 h-3.5 text-black" />
+            B.Tech in Electronics and Communication Engineering
+          </motion.p>
+
+          {/* Location Tag */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.45 }}
+            className="text-xs text-zinc-400 font-mono flex items-center gap-1.5"
+          >
+            <MapPin className="w-3.5 h-3.5 text-[#CCFF00]" />
+            Kolkata, India
+          </motion.p>
+
+          {/* Action Callouts */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
+            className="flex flex-wrap items-center gap-4 pt-4 w-full"
+          >
+            <button
+              onClick={() => scrollTo('projects')}
+              type="button"
+              className="group flex items-center gap-2 px-6 py-3 bg-[#CCFF00] hover:bg-white border-2 border-[#CCFF00] hover:border-white text-black font-bold rounded-none text-xs tracking-wider transition-all duration-200 hover:shadow-[4px_4px_0_0_#FFF] focus:outline-none cursor-pointer"
+            >
+              VIEW PROJECTS
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
+            </button>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.65, ease: 'easeOut' }}
+            className="flex items-center gap-3"
+          >
+            <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest font-bold">CONNECT</span>
+            <div className="w-px h-4 bg-white/20" />
+            {[
+              { href: 'https://github.com/0x-rekt', icon: Github, label: 'GitHub' },
+              { href: 'https://www.linkedin.com/in/sowdarjya-kolay-616176314', icon: Linkedin, label: 'LinkedIn' },
+              { href: 'https://x.com/_Kolayyyyyyy__', icon: FaXTwitter, label: 'X / Twitter' },
+              { href: 'mailto:sowdarjyakolay@gmail.com', icon: Mail, label: 'Email' },
+            ].map(({ href, icon: Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith('mailto') ? undefined : '_blank'}
+                rel="noreferrer"
+                aria-label={label}
+                title={label}
+                className="p-2 border-2 border-white/20 bg-transparent text-zinc-400 hover:text-black hover:bg-[#CCFF00] hover:border-[#CCFF00] transition-all duration-200 cursor-pointer"
+              >
+                <Icon className="w-3.5 h-3.5" />
+              </a>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Live System Diagnostics / Futuristic Module - Column Right (Neobrutalist Panel) */}
+        <div className="lg:col-span-5 w-full h-full flex justify-center items-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="w-full max-w-[420px] aspect-square rounded-none p-6 relative overflow-hidden flex flex-col justify-between glass-panel"
+          >
+            {/* Visual scanline effect */}
+            <div className="absolute inset-0 scanline pointer-events-none opacity-20" />
+
+            <div className="flex items-center justify-between border-b-2 border-white/20 pb-3">
+              <span className="font-mono text-[10px] text-zinc-400 font-bold tracking-wider">SYSTEM_NODE: INCEPTION</span>
+              <span className="font-mono text-[10px] text-black bg-[#CCFF00] px-1 border border-white/25 flex items-center gap-1 font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse"></span>
+                ACTIVE
+              </span>
             </div>
-          ) : contribWeeks.length > 0 ? (
-            <ContributionGraph
-              weeks={contribWeeks}
-              totalCount={totalContribs}
-            />
-          ) : (
-            <p className="text-center text-xs text-[#484f58] font-mono py-6">
-              Could not load contribution data.
-            </p>
-          )}
-        </motion.div>
-      </motion.div>
-    </div>
-  );
-};
 
-export default Hero;
+            {/* Futuristic Terminal Shell Display */}
+            <div className="font-mono text-xs text-white space-y-3 py-6 my-auto text-left flex-1 flex flex-col justify-center">
+              <div className="text-zinc-400 font-bold">&gt; initial_query = &quot;Who is Sowdarjya Kolay?&quot;</div>
+              <div>
+                <span className="text-zinc-100 font-bold">SK.config</span>: <span className="text-zinc-400">&quot;{'{'}&quot;</span>
+              </div>
+              <div className="pl-4 font-bold">
+                field: <span className="text-black bg-[#CCFF00] px-1">&quot;Artificial Intelligence / Web&quot;</span>,
+              </div>
+              <div className="pl-4 font-bold font-mono text-zinc-200">
+                frameworks: <span className="text-white border-b border-white">[&quot;NextJS&quot;, &quot;React&quot;, &quot;FastAPI&quot;]</span>,
+              </div>
+              <div className="pl-4 font-bold text-zinc-200">
+                hardware_affinity: <span className="text-zinc-300 italic">&quot;ECE Systems&quot;</span>
+              </div>
+              <div className="font-bold"><span className="text-zinc-400">{'}'}</span></div>
+              <div className="text-zinc-400 font-bold">&gt; core_vision()</div>
+              <div className="bg-zinc-900 text-[#CCFF00] p-3 border border-white/15 font-bold">
+                &gt;&gt; &quot;Merging neuromorphics with edge system scalability.&quot;<span className="terminal-cursor text-[#CCFF00]">|</span>
+              </div>
+            </div>
+
+            {/* Matrix diagnostic stats row */}
+            <div className="border-t-2 border-white/10 pt-4 flex justify-between items-center text-left">
+              <div>
+                <div className="font-sans text-[10px] text-zinc-400 font-bold">SYS LOAD</div>
+                <div className="font-mono text-xs text-white font-bold">0.04% ACCEL</div>
+              </div>
+              <div>
+                <div className="font-sans text-[10px] text-zinc-400 font-bold">VECTOR CLUSTER</div>
+                <div className="font-mono text-xs text-white font-bold">COSINE.OK</div>
+              </div>
+              <div>
+                <div className="font-sans text-[10px] text-zinc-400 font-bold">IO SPEED</div>
+                <div className="font-mono text-xs text-white font-bold">&lt; 14ms RESP</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
