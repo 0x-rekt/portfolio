@@ -43,7 +43,7 @@ export default function Projects() {
             Portfolio
           </Badge>
           <h2 className="text-white font-display font-extrabold text-3xl md:text-5xl tracking-normal uppercase leading-[0.9]">
-            Production Schemas
+            Projects & Production Work
           </h2>
           <div className="w-16 h-1.5 bg-[#CCFF00]" />
         </div>
@@ -117,7 +117,7 @@ export default function Projects() {
                           asChild
                           className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest font-bold text-black bg-[#CCFF00] border-2 border-[#CCFF00] px-3 py-1.5 hover:bg-white hover:border-white transition-all cursor-pointer shadow-[2px_2px_0px_#FFF] hover:shadow-none active:translate-x-[1px] active:translate-y-[1px] rounded-none h-auto"
                         >
-                          <a href={project.liveLink} target="_blank" rel="noreferrer">
+                        <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="w-3 h-3" />
                             LIVE DEMO
                           </a>
@@ -129,7 +129,7 @@ export default function Projects() {
                           variant="outline"
                           className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest font-bold text-white bg-transparent border-2 border-white px-3 py-1.5 hover:bg-white hover:text-black transition-all cursor-pointer rounded-none h-auto"
                         >
-                          <a href={project.githubLink} target="_blank" rel="noreferrer">
+                          <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
                             <Github className="w-3 h-3" />
                             SOURCE
                           </a>
