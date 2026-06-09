@@ -3,6 +3,8 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, type Variants } from 'motion/react';
 import { GitCommitHorizontal } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
 interface Entry {
   date: string;
@@ -151,9 +153,12 @@ const CommitEntry = ({ entry }: { entry: Entry }) => (
               <h4 className="text-[14px] font-mono font-semibold text-white leading-tight">
                 {entry.title}
               </h4>
-              <span className="text-[10px] font-mono px-1.5 py-0.5 border border-[#CCFF00]/40 bg-[#CCFF00]/10 text-[#CCFF00] rounded-none font-bold tracking-wide">
+              <Badge
+                variant="outline"
+                className="text-[10px] font-mono px-1.5 py-0.5 border border-[#CCFF00]/40 bg-[#CCFF00]/10 text-[#CCFF00] rounded-none font-bold tracking-wide h-auto"
+              >
                 {entry.tag}
-              </span>
+              </Badge>
             </div>
             <p className="text-[12px] font-mono text-white/50 leading-relaxed">
               {entry.description}
@@ -230,9 +235,9 @@ export default function ExperienceTimeline() {
 
           {/* Section heading */}
           <motion.div variants={fadeUp} className="flex flex-col space-y-3">
-            <span className="font-mono text-xs uppercase tracking-widest bg-black text-[#CCFF00] border border-white/20 px-3 py-1 font-bold w-fit">
+            <Badge className="font-mono text-xs uppercase tracking-widest bg-black text-[#CCFF00] border border-white/20 px-3 py-1 font-bold w-fit rounded-none h-auto">
               History
-            </span>
+            </Badge>
             <h2 className="text-white font-display font-extrabold text-3xl md:text-5xl tracking-tight uppercase leading-[0.9]">
               Engineering Timeline
             </h2>
@@ -241,6 +246,7 @@ export default function ExperienceTimeline() {
 
           {/* Git log list */}
           <motion.div variants={fadeUp}>
+            <Separator className="bg-white/10 mb-8" />
             <GitLog entries={entries} />
           </motion.div>
 

@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Play, Pause, RotateCcw, Cpu, Plus, Minus, Hash } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface Node {
   x: number;
@@ -297,10 +300,11 @@ export default function BrainEngineSandbox({ embeddedMode = false }: BrainEngine
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
-          <button
+          {/* Play / Pause */}
+          <Button
             onClick={() => setIsPlaying(!isPlaying)}
-            type="button"
-            className="flex items-center gap-1.5 px-3 py-1.5 border border-white/8 bg-white/3 hover:bg-[#CCFF00]/10 hover:border-[#CCFF00]/40 hover:text-[#CCFF00] rounded-none text-white/80 transition-all cursor-pointer"
+            variant="ghost"
+            className="flex items-center gap-1.5 px-3 py-1.5 border border-white/10 bg-white/5 hover:bg-[#CCFF00]/10 hover:border-[#CCFF00]/40 hover:text-[#CCFF00] rounded-none text-white/80 transition-all cursor-pointer h-auto font-mono text-xs"
           >
             {isPlaying ? (
               <>
@@ -313,16 +317,18 @@ export default function BrainEngineSandbox({ embeddedMode = false }: BrainEngine
                 RESUME
               </>
             )}
-          </button>
+          </Button>
 
-          <button
+          {/* Reset */}
+          <Button
             onClick={resetSimulator}
-            type="button"
-            className="flex items-center gap-1 px-2.5 py-1.5 border border-white/8 bg-white/3 hover:border-red-400/40 hover:text-red-400 rounded-none text-white/50 transition-all cursor-pointer"
+            variant="ghost"
+            size="icon"
+            className="p-1 px-2 border border-white/10 bg-white/5 hover:border-red-400/40 hover:text-red-400 rounded-none text-white/50 transition-all cursor-pointer h-auto w-auto"
             title="Reset Neuron States"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -363,69 +369,72 @@ export default function BrainEngineSandbox({ embeddedMode = false }: BrainEngine
                 <span className="text-[#CCFF00] font-bold">{hiddenLayersCount} BLOCKS</span>
               </div>
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
+                  size="icon"
                   disabled={hiddenLayersCount <= 1}
                   onClick={() => {
                     setHiddenLayersCount((prev) => prev - 1);
                     addLog('Removed hidden layer stack block.');
                   }}
-                  className="p-1 px-2 border border-white/10 rounded-none hover:border-white/20 disabled:opacity-30 cursor-pointer"
+                  className="p-1 w-7 h-7 border border-white/10 rounded-none hover:border-white/20 hover:bg-white/5 disabled:opacity-30 cursor-pointer bg-transparent text-white"
                 >
-                  <Minus className="w-3 h-3 text-white" />
-                </button>
+                  <Minus className="w-3 h-3" />
+                </Button>
                 <div className="flex-1 text-center font-mono text-[11px] text-white/80">
                   Layers Count
                 </div>
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
+                  size="icon"
                   disabled={hiddenLayersCount >= 4}
                   onClick={() => {
                     setHiddenLayersCount((prev) => prev + 1);
                     addLog('Appended additional hidden neural cells block.');
                   }}
-                  className="p-1 px-2 border border-white/10 rounded-none hover:border-white/20 disabled:opacity-30 cursor-pointer"
+                  className="p-1 w-7 h-7 border border-white/10 rounded-none hover:border-white/20 hover:bg-white/5 disabled:opacity-30 cursor-pointer bg-transparent text-white"
                 >
-                  <Plus className="w-3 h-3 text-white" />
-                </button>
+                  <Plus className="w-3 h-3" />
+                </Button>
               </div>
             </div>
 
-            {/* Synaptic Weights coupling slider */}
+            {/* Synaptic Weights coupling — Shadcn Slider */}
             <div className="space-y-1.5 pt-1">
               <div className="flex justify-between font-mono text-[10px] items-center">
                 <span className="text-white/40">SYNAPSE WEIGHTS:</span>
                 <span className="text-[#d0bcff] font-bold">{(synapseStrength * 100).toFixed(0)}% WT</span>
               </div>
-              <input
-                type="range"
-                min="0.1"
-                max="1.5"
-                step="0.05"
-                value={synapseStrength}
-                onChange={(e) => {
-                  setSynapseStrength(parseFloat(e.target.value));
-                  addLog(`Synapse coefficient modified: ${e.target.value}x`);
+              <Slider
+                min={0.1}
+                max={1.5}
+                step={0.05}
+                value={[synapseStrength]}
+                onValueChange={(val) => {
+                  setSynapseStrength(val[0]);
+                  addLog(`Synapse coefficient modified: ${val[0].toFixed(2)}x`);
                 }}
-                className="w-full accent-[#d0bcff] h-1.5 rounded-full cursor-pointer bg-white/10 outline-none"
+                className="w-full [&_[data-slot=slider-track]]:bg-white/10 [&_[data-slot=slider-range]]:bg-[#d0bcff] [&_[data-slot=slider-thumb]]:border-[#d0bcff] [&_[data-slot=slider-thumb]]:bg-[#d0bcff] cursor-pointer"
               />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Embedded Logging Terminal Terminal console inside simulation */}
+      {/* Embedded Logging Terminal — Shadcn ScrollArea */}
       <div className="border-t border-white/5 mt-4 pt-3 text-left">
         <span className="font-mono text-[9px] text-white/30 tracking-widest block mb-2 uppercase flex items-center gap-1">
           <Hash className="w-2.5 h-2.5" /> LIVE RECEPTOR INTERACTION STREAMS
         </span>
-        <div className="bg-[#050506] rounded-none p-3 h-[75px] overflow-y-auto border border-white/5 font-mono text-[10px] text-white/40 flex flex-col-reverse justify-end gap-1 select-all">
-          {logs.map((log, index) => (
-            <div key={index} className="truncate select-text">
-              <span className="text-[#CCFF00]">&gt;</span> {log}
-            </div>
-          ))}
-        </div>
+        <ScrollArea className="bg-[#050506] rounded-none p-3 h-[75px] border border-white/5 font-mono text-[10px] text-white/40">
+          <div className="flex flex-col-reverse gap-1">
+            {logs.map((log, index) => (
+              <div key={index} className="truncate select-text">
+                <span className="text-[#CCFF00]">&gt;</span> {log}
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
       </div>
     </div>
   );

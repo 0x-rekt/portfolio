@@ -4,6 +4,8 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Binary, Cpu, Github, Linkedin, Mail, MapPin } from 'lucide-react';
 import { FaXTwitter } from 'react-icons/fa6';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -126,13 +128,14 @@ export default function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#CCFF00] border-2 border-white text-[10px] text-black font-mono font-bold tracking-widest uppercase shadow-[2px_2px_0px_#FFF]"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-black"></span>
-            </span>
-            Available for Hire
+            <Badge className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#CCFF00] border-2 border-white text-[10px] text-black font-mono font-bold tracking-widest uppercase shadow-[2px_2px_0px_#FFF] rounded-none h-auto">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-black"></span>
+              </span>
+              Available for Hire
+            </Badge>
           </motion.div>
 
           {/* Name Header */}
@@ -151,10 +154,11 @@ export default function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="inline-flex items-center gap-2 py-1 px-2.5 bg-zinc-900 border-2 border-white/20"
             >
-              <Cpu className="w-3.5 h-3.5 text-[#CCFF00]" />
-              <span className="font-mono text-[11px] text-white uppercase tracking-wider font-bold">AI Engineer & Full-Stack SDE</span>
+              <Badge className="inline-flex items-center gap-2 py-1 px-2.5 bg-zinc-900 border-2 border-white/20 text-white rounded-none h-auto font-mono text-[11px] uppercase tracking-wider font-bold">
+                <Cpu className="w-3.5 h-3.5 text-[#CCFF00]" />
+                AI Engineer & Full-Stack SDE
+              </Badge>
             </motion.div>
           </div>
 
@@ -169,26 +173,28 @@ export default function Hero() {
           </motion.p>
 
           {/* Academic Tag */}
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xs text-black font-mono flex items-center gap-2 bg-[#CCFF00] px-3 py-1.5 border-2 border-white font-bold shadow-[2px_2px_0px_#FFF]"
           >
-            <Binary className="w-3.5 h-3.5 text-black" />
-            B.Tech in Electronics and Communication Engineering
-          </motion.p>
+            <Badge className="text-xs text-black font-mono flex items-center gap-2 bg-[#CCFF00] px-3 py-1.5 border-2 border-white font-bold shadow-[2px_2px_0px_#FFF] rounded-none h-auto">
+              <Binary className="w-3.5 h-3.5 text-black" />
+              B.Tech in Electronics and Communication Engineering
+            </Badge>
+          </motion.div>
 
           {/* Location Tag */}
-          <motion.p
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className="text-xs text-zinc-400 font-mono flex items-center gap-1.5"
           >
-            <MapPin className="w-3.5 h-3.5 text-[#CCFF00]" />
-            Kolkata, India
-          </motion.p>
+            <Badge variant="outline" className="text-xs text-zinc-400 font-mono flex items-center gap-1.5 border-white/20 rounded-none h-auto px-2.5 py-1">
+              <MapPin className="w-3.5 h-3.5 text-[#CCFF00]" />
+              Kolkata, India
+            </Badge>
+          </motion.div>
 
           {/* Action Callouts */}
           <motion.div
@@ -197,14 +203,13 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
             className="flex flex-wrap items-center gap-4 pt-4 w-full"
           >
-            <button
+            <Button
               onClick={() => scrollTo('projects')}
-              type="button"
-              className="group flex items-center gap-2 px-6 py-3 bg-[#CCFF00] hover:bg-white border-2 border-[#CCFF00] hover:border-white text-black font-bold rounded-none text-xs tracking-wider transition-all duration-200 hover:shadow-[4px_4px_0_0_#FFF] focus:outline-none cursor-pointer"
+              className="group flex items-center gap-2 px-6 py-3 bg-[#CCFF00] hover:bg-white border-2 border-[#CCFF00] hover:border-white text-black font-bold rounded-none text-xs tracking-wider transition-all duration-200 hover:shadow-[4px_4px_0_0_#FFF] cursor-pointer h-auto"
             >
               VIEW PROJECTS
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
-            </button>
+            </Button>
           </motion.div>
 
           {/* Social Links */}
@@ -222,17 +227,23 @@ export default function Hero() {
               { href: 'https://x.com/_Kolayyyyyyy__', icon: FaXTwitter, label: 'X / Twitter' },
               { href: 'mailto:sowdarjyakolay@gmail.com', icon: Mail, label: 'Email' },
             ].map(({ href, icon: Icon, label }) => (
-              <a
+              <Button
                 key={label}
-                href={href}
-                target={href.startsWith('mailto') ? undefined : '_blank'}
-                rel="noreferrer"
-                aria-label={label}
-                title={label}
-                className="p-2 border-2 border-white/20 bg-transparent text-zinc-400 hover:text-black hover:bg-[#CCFF00] hover:border-[#CCFF00] transition-all duration-200 cursor-pointer"
+                variant="ghost"
+                size="icon"
+                asChild
+                className="p-2 w-auto h-auto border-2 border-white/20 bg-transparent text-zinc-400 hover:text-black hover:bg-[#CCFF00] hover:border-[#CCFF00] transition-all duration-200 rounded-none"
               >
-                <Icon className="w-3.5 h-3.5" />
-              </a>
+                <a
+                  href={href}
+                  target={href.startsWith('mailto') ? undefined : '_blank'}
+                  rel="noreferrer"
+                  aria-label={label}
+                  title={label}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                </a>
+              </Button>
             ))}
           </motion.div>
         </div>

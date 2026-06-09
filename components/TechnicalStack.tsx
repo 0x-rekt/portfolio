@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { skills } from '@/constants/skills';
 import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
 
 export default function TechnicalStack() {
   return (
@@ -17,9 +18,9 @@ export default function TechnicalStack() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full">
         {/* Header Title */}
         <div className="flex flex-col items-center text-center mb-16 space-y-3">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] bg-black text-[#CCFF00] px-3 py-1 border border-white/20">
+          <Badge className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] bg-black text-[#CCFF00] px-3 py-1 border border-white/20 rounded-none h-auto">
             ARSENAL NODE
-          </span>
+          </Badge>
           <h2 className="text-white font-display font-extrabold text-3xl md:text-5xl tracking-tight uppercase leading-[0.9]">
             Technical Stack
           </h2>
@@ -37,17 +38,21 @@ export default function TechnicalStack() {
               transition={{ duration: 0.2, delay: index * 0.03 }}
               whileHover={{ y: -4, scale: 1.05 }}
               whileTap={{ scale: 0.96 }}
-              className="group flex items-center gap-2.5 px-4 py-2.5 border-2 border-white bg-zinc-900 font-mono text-xs text-white font-bold tracking-wider rounded-none cursor-default transition-colors duration-200 hover:bg-[#CCFF00] hover:border-[#CCFF00] hover:text-black hover:shadow-[3px_3px_0px_#FFF]"
             >
-              <div className="relative w-5 h-5 flex-shrink-0 transition-transform duration-200 group-hover:scale-110">
-                <Image
-                  src={skill.icon}
-                  alt={skill.name}
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span>{skill.name}</span>
+              <Badge
+                variant="outline"
+                className="group flex items-center gap-2.5 px-4 py-2.5 border-2 border-white bg-zinc-900 font-mono text-xs text-white font-bold tracking-wider rounded-none cursor-default transition-colors duration-200 hover:bg-[#CCFF00] hover:border-[#CCFF00] hover:text-black hover:shadow-[3px_3px_0px_#FFF] h-auto"
+              >
+                <div className="relative w-5 h-5 flex-shrink-0 transition-transform duration-200 group-hover:scale-110">
+                  <Image
+                    src={skill.icon}
+                    alt={skill.name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <span>{skill.name}</span>
+              </Badge>
             </motion.div>
           ))}
         </div>

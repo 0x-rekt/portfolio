@@ -21,6 +21,10 @@ export const skills = [
     icon: "/react-native.png",
   },
   {
+    name: "Redux",
+    icon: "/redux.png",
+  },
+  {
     name: "Git",
     icon: "/git.png",
   },

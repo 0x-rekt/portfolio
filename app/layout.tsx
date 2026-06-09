@@ -3,6 +3,7 @@ import "./globals.css";
 import { JetBrains_Mono } from "next/font/google";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -26,9 +27,11 @@ export default function RootLayout({
       className={`${jetbrainsMono.variable}`}
     >
       <body className="font-mono">
+        <TooltipProvider>
           <Header />
           {children}
           <Footer />
+        </TooltipProvider>
       </body>
     </html>
   );
