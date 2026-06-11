@@ -179,9 +179,9 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Badge className="text-xs text-black font-mono flex items-center gap-2 bg-[#CCFF00] px-3 py-1.5 border-2 border-white font-bold shadow-[2px_2px_0px_#FFF] rounded-none h-auto">
-              <Binary className="w-3.5 h-3.5 text-black" />
-              B.Tech in Electronics and Communication Engineering
+            <Badge className="text-xs text-black font-mono inline-flex items-start sm:items-center gap-2 bg-[#CCFF00] px-3 py-1.5 border-2 border-white font-bold shadow-[2px_2px_0px_#FFF] rounded-none h-auto max-w-full !whitespace-normal !overflow-visible w-fit">
+              <Binary className="w-3.5 h-3.5 text-black shrink-0 mt-0.5 sm:mt-0" />
+              <span className="break-words leading-snug">B.Tech in Electronics and Communication Engineering</span>
             </Badge>
           </motion.div>
 
