@@ -3,6 +3,7 @@ import "./globals.css";
 import { JetBrains_Mono } from "next/font/google";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -91,6 +92,7 @@ export default function RootLayout({
     >
       <body className="font-mono">
         <TooltipProvider>
+          <ScrollProgressBar />
           <Header />
           {children}
           <Footer />

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, type Variants } from 'motion/react';
+import { motion, useScroll, useTransform, useSpring, type Variants } from 'motion/react';
 import { GitCommitHorizontal } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
@@ -113,22 +113,55 @@ const entries: Entry[] = [
   },
 ];
 
+// ── Z-depth stagger variants ──────────────────────────────────────
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06 } },
+};
+
+const entryVariant: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 18,
+    z: -30,
+    rotateX: 4,
+    filter: 'blur(2px)',
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    z: 0,
+    rotateX: 0,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.48,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 14 },
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
 
-const container: Variants = {
+const headerContainer: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.07 } },
 };
 
+// ── Single commit entry ───────────────────────────────────────────
 const CommitEntry = ({ entry }: { entry: Entry }) => (
-  <motion.div variants={fadeUp} className="relative flex gap-4 group">
-    {/* Dot on the vertical line */}
+  <motion.div
+    variants={entryVariant}
+    className="relative flex gap-4 group"
+    style={{ transformStyle: 'preserve-3d' }}
+  >
+    {/* Dot on vertical line */}
     <div className="relative flex flex-col items-center shrink-0" style={{ width: 28 }}>
       <motion.div
-        whileHover={{ scale: 1.25 }}
+        whileHover={{ scale: 1.35, backgroundColor: '#CCFF00' }}
+        transition={{ duration: 0.2 }}
         className="relative z-10 w-4 h-4 mt-0.5 rounded-full border-2 border-white/40 flex items-center justify-center bg-[#0d1117] shrink-0"
       >
         <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
@@ -137,7 +170,7 @@ const CommitEntry = ({ entry }: { entry: Entry }) => (
 
     {/* Card */}
     <div className="flex-1 pb-8 min-w-0">
-      <div className="rounded-none border border-white/10 bg-[#121214] hover:border-[#CCFF00]/40 transition-all duration-200 overflow-hidden">
+      <div className="rounded-none border border-white/10 bg-[#121214] hover:border-[#CCFF00]/40 transition-all duration-250 overflow-hidden hover:shadow-[0_4px_24px_rgba(204,255,0,0.06)]">
         {/* Commit header row */}
         <div className="flex items-center gap-2 px-4 py-2 border-b border-white/10 bg-[#0a0a0c]">
           <GitCommitHorizontal className="w-3.5 h-3.5 text-white/30 shrink-0" />
@@ -170,6 +203,7 @@ const CommitEntry = ({ entry }: { entry: Entry }) => (
   </motion.div>
 );
 
+// ── Animated git log with scroll-linked line fill ──────────────────
 const GitLog = ({ entries }: { entries: Entry[] }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -181,15 +215,16 @@ const GitLog = ({ entries }: { entries: Entry[] }) => {
   const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative" style={{ transformStyle: 'preserve-3d' }}>
       {/* Static background line */}
       <div className="absolute left-[13px] top-0 bottom-0 w-px bg-white/10" />
-      {/* Animated fill line */}
+      {/* Scroll-animated fill line */}
       <motion.div
-        className="absolute left-[13px] top-0 w-px origin-top"
+        className="absolute left-[13px] top-0 w-px origin-top gpu-layer"
         style={{
           height: lineHeight,
-          background: "linear-gradient(to bottom, #CCFF00, #fff)",
+          background: "linear-gradient(to bottom, #CCFF00, rgba(104,245,184,0.6))",
+          boxShadow: "0 0 8px rgba(204,255,0,0.4)",
         }}
       />
 
@@ -199,6 +234,7 @@ const GitLog = ({ entries }: { entries: Entry[] }) => {
         whileInView="show"
         viewport={{ once: true, margin: "-60px" }}
         className="relative space-y-0"
+        style={{ perspective: 800, transformStyle: 'preserve-3d' }}
       >
         {entries.map((entry) => (
           <CommitEntry key={entry.hash} entry={entry} />
@@ -208,18 +244,39 @@ const GitLog = ({ entries }: { entries: Entry[] }) => {
   );
 };
 
+// ── Main section ──────────────────────────────────────────────────
 export default function ExperienceTimeline() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start 85%', 'start 20%'],
+  });
+
+  const smooth = useSpring(scrollYProgress, { stiffness: 70, damping: 22, restDelta: 0.001 });
+  const rotateX = useTransform(smooth, [0, 1], [10, 0]);
+  const translateY = useTransform(smooth, [0, 1], [60, 0]);
+  const opacity = useTransform(smooth, [0, 0.35], [0, 1]);
+
   return (
-    <section
+    <motion.section
       id="experience"
-      className="py-24 relative overflow-hidden border-t-4 border-white bg-transparent"
+      ref={sectionRef}
+      className="py-24 relative overflow-hidden bg-transparent section-3d-enter"
+      style={{
+        opacity,
+        rotateX,
+        y: translateY,
+        transformOrigin: 'center bottom',
+        perspective: 1000,
+      }}
     >
-      {/* Grid Overlay Line Effects */}
+      {/* Grid Overlay */}
       <div className="absolute inset-0 engineering-grid pointer-events-none opacity-50" />
 
       <div className="max-w-3xl mx-auto px-6 relative z-10">
         <motion.div
-          variants={container}
+          variants={headerContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
@@ -244,7 +301,7 @@ export default function ExperienceTimeline() {
             <div className="w-16 h-1.5 bg-[#CCFF00]" />
           </motion.div>
 
-          {/* Git log list */}
+          {/* Git log */}
           <motion.div variants={fadeUp}>
             <Separator className="bg-white/10 mb-8" />
             <GitLog entries={entries} />
@@ -260,6 +317,6 @@ export default function ExperienceTimeline() {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

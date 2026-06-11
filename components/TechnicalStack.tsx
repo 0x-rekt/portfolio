@@ -1,23 +1,51 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import { skills } from '@/constants/skills';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 
 export default function TechnicalStack() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start 85%', 'start 20%'],
+  });
+
+  const smooth = useSpring(scrollYProgress, { stiffness: 70, damping: 22, restDelta: 0.001 });
+
+  // Section enters rising from a rotated plane below
+  const rotateX = useTransform(smooth, [0, 1], [10, 0]);
+  const translateY = useTransform(smooth, [0, 1], [60, 0]);
+  const opacity = useTransform(smooth, [0, 0.4], [0, 1]);
+
   return (
-    <section
+    <motion.section
       id="skills"
-      className="py-24 relative overflow-hidden border-t-4 border-white bg-transparent"
+      ref={sectionRef}
+      className="py-24 relative overflow-hidden bg-transparent section-3d-enter"
+      style={{
+        opacity,
+        rotateX,
+        y: translateY,
+        transformOrigin: 'center bottom',
+        perspective: 1000,
+      }}
     >
-      {/* Grid Overlay Line Effects */}
+      {/* Grid Overlay */}
       <div className="absolute inset-0 engineering-grid pointer-events-none opacity-50" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full">
-        {/* Header Title */}
-        <div className="flex flex-col items-center text-center mb-16 space-y-3">
+        {/* Section header */}
+        <motion.div
+          className="flex flex-col items-center text-center mb-16 space-y-3"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
           <Badge className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] bg-black text-[#CCFF00] px-3 py-1 border border-white/20 rounded-none h-auto">
             ARSENAL NODE
           </Badge>
@@ -25,19 +53,29 @@ export default function TechnicalStack() {
             Technical Stack
           </h2>
           <div className="w-16 h-1.5 bg-[#CCFF00]" />
-        </div>
+        </motion.div>
 
-        {/* Skills Grid */}
+        {/* Skills grid — staggered 3D depth pop */}
         <div className="flex flex-wrap gap-3 justify-center">
           {skills.map((skill, index) => (
             <motion.div
               key={skill.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.2, delay: index * 0.03 }}
-              whileHover={{ y: -4, scale: 1.05 }}
-              whileTap={{ scale: 0.96 }}
+              initial={{ opacity: 0, scale: 0.8, z: -30, rotateY: -8 }}
+              whileInView={{ opacity: 1, scale: 1, z: 0, rotateY: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{
+                duration: 0.35,
+                delay: index * 0.025,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              whileHover={{
+                y: -5,
+                scale: 1.06,
+                rotateY: 3,
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{ scale: 0.95 }}
+              style={{ transformStyle: 'preserve-3d' }}
             >
               <Badge
                 variant="outline"
@@ -57,6 +95,6 @@ export default function TechnicalStack() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
