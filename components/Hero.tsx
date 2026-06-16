@@ -35,7 +35,7 @@ export default function Hero() {
   // Whole section subtly scales down as you scroll away (camera pull-back)
   const sectionScale = useTransform(smoothProgress, [0, 1], [1, 0.92]);
 
-  // ─── Canvas particle mesh ──────────────────────────────────────
+  // ─── Canvas particle mesh (AetherFlow: mouse-interactive) ─────────
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -43,78 +43,123 @@ export default function Hero() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let lastTime = 0;
-    const FPS_CAP = 45; // cap to avoid unnecessary renders
-    const FRAME_MIN = 1000 / FPS_CAP;
+    const mouse: { x: number | null; y: number | null; radius: number } = {
+      x: null,
+      y: null,
+      radius: 180,
+    };
 
-    let width = (canvas.width = canvas.offsetWidth);
-    let height = (canvas.height = canvas.offsetHeight);
+    class Particle {
+      x: number; y: number;
+      directionX: number; directionY: number;
+      size: number; color: string;
 
-    // Fewer particles on mobile for performance
-    const isMobile = width < 768;
-    const maxParticles = isMobile ? 18 : Math.min(40, Math.floor((width * height) / 30000));
+      constructor(x: number, y: number, dx: number, dy: number, size: number, color: string) {
+        this.x = x; this.y = y;
+        this.directionX = dx; this.directionY = dy;
+        this.size = size; this.color = color;
+      }
 
-    const particles: Array<{
-      x: number; y: number; vx: number; vy: number; radius: number; alpha: number;
-    }> = [];
+      draw() {
+        ctx!.beginPath();
+        ctx!.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx!.fillStyle = this.color;
+        ctx!.fill();
+      }
 
-    for (let i = 0; i < maxParticles; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        radius: Math.random() * 1.2 + 0.8,
-        alpha: Math.random() * 0.4 + 0.15,
-      });
+      update() {
+        if (this.x > canvas!.width || this.x < 0) this.directionX = -this.directionX;
+        if (this.y > canvas!.height || this.y < 0) this.directionY = -this.directionY;
+
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius + this.size) {
+            const fx = dx / dist;
+            const fy = dy / dist;
+            const force = (mouse.radius - dist) / mouse.radius;
+            this.x -= fx * force * 5;
+            this.y -= fy * force * 5;
+          }
+        }
+
+        this.x += this.directionX;
+        this.y += this.directionY;
+        this.draw();
+      }
     }
 
-    const draw = (time: number) => {
-      animationFrameId = requestAnimationFrame(draw);
-      if (time - lastTime < FRAME_MIN) return; // throttle
-      lastTime = time;
+    let particles: Particle[] = [];
 
-      ctx.clearRect(0, 0, width, height);
+    const init = () => {
+      particles = [];
+      const count = (canvas!.height * canvas!.width) / 9000;
+      for (let i = 0; i < count; i++) {
+        const size = Math.random() * 1.8 + 0.6;
+        const x = Math.random() * (canvas!.width  - size * 4) + size * 2;
+        const y = Math.random() * (canvas!.height - size * 4) + size * 2;
+        const dx = (Math.random() * 0.4) - 0.2;
+        const dy = (Math.random() * 0.4) - 0.2;
+        particles.push(new Particle(x, y, dx, dy, size, 'rgba(204,255,0,0.7)'));
+      }
+    };
 
-      for (let i = 0; i < particles.length; i++) {
-        const p1 = particles[i];
-        p1.x += p1.vx;
-        p1.y += p1.vy;
-        if (p1.x < 0 || p1.x > width) p1.vx *= -1;
-        if (p1.y < 0 || p1.y > height) p1.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${p1.alpha * 0.3})`;
-        ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-          if (dist < 140) {
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(255,255,255,${(1 - dist / 140) * 0.12})`;
-            ctx.lineWidth = 0.7;
-            ctx.stroke();
+    const connect = () => {
+      const threshold = (canvas!.width / 7) * (canvas!.height / 7);
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a + 1; b < particles.length; b++) {
+          const dist =
+            (particles[a].x - particles[b].x) ** 2 +
+            (particles[a].y - particles[b].y) ** 2;
+          if (dist < threshold) {
+            const opacity = 1 - dist / 20000;
+            let nearMouse = false;
+            if (mouse.x !== null && mouse.y !== null) {
+              const dxm = particles[a].x - mouse.x;
+              const dym = particles[a].y - mouse.y;
+              nearMouse = Math.sqrt(dxm * dxm + dym * dym) < mouse.radius;
+            }
+            ctx!.strokeStyle = `rgba(204,255,0,${opacity * (nearMouse ? 0.75 : 0.45)})`;
+            ctx!.lineWidth = nearMouse ? 1 : 0.6;
+            ctx!.beginPath();
+            ctx!.moveTo(particles[a].x, particles[a].y);
+            ctx!.lineTo(particles[b].x, particles[b].y);
+            ctx!.stroke();
           }
         }
       }
     };
 
-    animationFrameId = requestAnimationFrame(draw);
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate);
+      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+      particles.forEach(p => p.update());
+      connect();
+    };
 
     const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
+      canvas!.width  = canvas!.offsetWidth;
+      canvas!.height = canvas!.offsetHeight;
+      init();
     };
-    window.addEventListener('resize', handleResize);
+    const handleMouseMove = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    const handleMouseOut  = () => { mouse.x = null; mouse.y = null; };
+
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    init();
+    animate();
+
+    window.addEventListener('resize',    handleResize);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseout',  handleMouseOut);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize',    handleResize);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseout',  handleMouseOut);
     };
   }, []);
 
@@ -137,10 +182,10 @@ export default function Hero() {
         style={{ y: gridY }}
       />
 
-      {/* Canvas particle mesh */}
+      {/* Canvas particle mesh — AetherFlow interactive */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-40 gpu-layer"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-60 gpu-layer"
       />
 
       {/* Subtle radial glow at origin */}
