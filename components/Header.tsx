@@ -23,28 +23,38 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    let throttleTimeout: NodeJS.Timeout | null = null;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (throttleTimeout) return;
 
-      // Detect active section based on scroll offset
-      const offsets = navItems.map((item) => {
-        const el = document.getElementById(item.id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          return { id: item.id, top: Math.abs(rect.top) };
-        }
-        return { id: item.id, top: Infinity };
-      });
+      throttleTimeout = setTimeout(() => {
+        throttleTimeout = null;
+        setScrolled(window.scrollY > 20);
 
-      const closest = offsets.reduce((min, current) => 
-        current.top < min.top ? current : min
-      , { id: 'hero', top: Infinity });
+        // Detect active section based on scroll offset
+        const offsets = navItems.map((item) => {
+          const el = document.getElementById(item.id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            return { id: item.id, top: Math.abs(rect.top) };
+          }
+          return { id: item.id, top: Infinity };
+        });
 
-      setActiveSection(closest.id);
+        const closest = offsets.reduce((min, current) => 
+          current.top < min.top ? current : min
+        , { id: 'hero', top: Infinity });
+
+        setActiveSection(closest.id);
+      }, 100); // run at most 10 times a second to prevent layout thrashing
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (throttleTimeout) clearTimeout(throttleTimeout);
+    };
   }, []);
 
   const scrollToSection = (id: string) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'motion/react';
+import { motion, useScroll, useTransform, useSpring, useInView } from 'motion/react';
 import { ArrowRight, Binary, Cpu, Github, Linkedin, Mail, MapPin } from 'lucide-react';
 import { FaXTwitter } from 'react-icons/fa6';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,9 @@ import { Badge } from '@/components/ui/badge';
 export default function Hero() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // Stop rendering loops when Hero is out of view (saves massive CPU/GPU layout recalculation cycles)
+  const isInView = useInView(sectionRef, { once: false, amount: 0.05 });
 
   // ─── Scroll-driven parallax ─────────────────────────────────────
   const { scrollYProgress } = useScroll({
@@ -37,6 +40,8 @@ export default function Hero() {
 
   // ─── Canvas particle mesh (AetherFlow: mouse-interactive) ─────────
   useEffect(() => {
+    if (!isInView) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -94,40 +99,83 @@ export default function Hero() {
 
     const init = () => {
       particles = [];
-      const count = (canvas!.height * canvas!.width) / 9000;
+      // Cap at 75 particles maximum to guarantee solid 60fps on large screens
+      const area = canvas!.width * canvas!.height;
+      const count = Math.min(75, Math.floor(area / 15000));
       for (let i = 0; i < count; i++) {
-        const size = Math.random() * 1.8 + 0.6;
+        const size = Math.random() * 1.4 + 0.6;
         const x = Math.random() * (canvas!.width  - size * 4) + size * 2;
         const y = Math.random() * (canvas!.height - size * 4) + size * 2;
-        const dx = (Math.random() * 0.4) - 0.2;
-        const dy = (Math.random() * 0.4) - 0.2;
-        particles.push(new Particle(x, y, dx, dy, size, 'rgba(204,255,0,0.7)'));
+        const dx = (Math.random() * 0.3) - 0.15; // slightly slower drift
+        const dy = (Math.random() * 0.3) - 0.15;
+        particles.push(new Particle(x, y, dx, dy, size, 'rgba(204,255,0,0.6)'));
       }
     };
 
     const connect = () => {
-      const threshold = (canvas!.width / 7) * (canvas!.height / 7);
+      const distLimit = 110 * 110; // 12100 square pixels (fixed maximum distance limit)
+      const normalLines: { x1: number; y1: number; x2: number; y2: number }[] = [];
+      const mouseLines: { x1: number; y1: number; x2: number; y2: number }[] = [];
+
       for (let a = 0; a < particles.length; a++) {
+        const pA = particles[a];
+        
+        // Cache mouse state check for particle A
+        let pANearMouse = false;
+        if (mouse.x !== null && mouse.y !== null) {
+          const dxm = pA.x - mouse.x;
+          const dym = pA.y - mouse.y;
+          pANearMouse = (dxm * dxm + dym * dym) < mouse.radius * mouse.radius;
+        }
+
         for (let b = a + 1; b < particles.length; b++) {
-          const dist =
-            (particles[a].x - particles[b].x) ** 2 +
-            (particles[a].y - particles[b].y) ** 2;
-          if (dist < threshold) {
-            const opacity = 1 - dist / 20000;
-            let nearMouse = false;
-            if (mouse.x !== null && mouse.y !== null) {
-              const dxm = particles[a].x - mouse.x;
-              const dym = particles[a].y - mouse.y;
-              nearMouse = Math.sqrt(dxm * dxm + dym * dym) < mouse.radius;
+          const pB = particles[b];
+          const dx = pA.x - pB.x;
+          const dy = pA.y - pB.y;
+          const dist = dx * dx + dy * dy;
+
+          if (dist < distLimit) {
+            // Determine if the connection is near the mouse
+            let nearMouse = pANearMouse;
+            if (!nearMouse && mouse.x !== null && mouse.y !== null) {
+              const dxm = pB.x - mouse.x;
+              const dym = pB.y - mouse.y;
+              nearMouse = (dxm * dxm + dym * dym) < mouse.radius * mouse.radius;
             }
-            ctx!.strokeStyle = `rgba(204,255,0,${opacity * (nearMouse ? 0.75 : 0.45)})`;
-            ctx!.lineWidth = nearMouse ? 1 : 0.6;
-            ctx!.beginPath();
-            ctx!.moveTo(particles[a].x, particles[a].y);
-            ctx!.lineTo(particles[b].x, particles[b].y);
-            ctx!.stroke();
+
+            if (nearMouse) {
+              mouseLines.push({ x1: pA.x, y1: pA.y, x2: pB.x, y2: pB.y });
+            } else {
+              normalLines.push({ x1: pA.x, y1: pA.y, x2: pB.x, y2: pB.y });
+            }
           }
         }
+      }
+
+      // Draw normal lines in a single batch (low opacity, thin)
+      if (normalLines.length > 0) {
+        ctx!.beginPath();
+        ctx!.strokeStyle = 'rgba(204, 255, 0, 0.12)';
+        ctx!.lineWidth = 0.5;
+        for (let i = 0; i < normalLines.length; i++) {
+          const line = normalLines[i];
+          ctx!.moveTo(line.x1, line.y1);
+          ctx!.lineTo(line.x2, line.y2);
+        }
+        ctx!.stroke();
+      }
+
+      // Draw mouse interactive lines in a single batch (higher opacity, slightly thicker)
+      if (mouseLines.length > 0) {
+        ctx!.beginPath();
+        ctx!.strokeStyle = 'rgba(204, 255, 0, 0.45)';
+        ctx!.lineWidth = 0.8;
+        for (let i = 0; i < mouseLines.length; i++) {
+          const line = mouseLines[i];
+          ctx!.moveTo(line.x1, line.y1);
+          ctx!.lineTo(line.x2, line.y2);
+        }
+        ctx!.stroke();
       }
     };
 
@@ -143,7 +191,13 @@ export default function Hero() {
       canvas!.height = canvas!.offsetHeight;
       init();
     };
-    const handleMouseMove = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY; };
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    };
+    
     const handleMouseOut  = () => { mouse.x = null; mouse.y = null; };
 
     canvas.width  = canvas.offsetWidth;
@@ -161,7 +215,7 @@ export default function Hero() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout',  handleMouseOut);
     };
-  }, []);
+  }, [isInView]);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
