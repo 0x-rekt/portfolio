@@ -71,7 +71,7 @@ export default function Header() {
         id="navbar-header"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled 
-            ? 'bg-[#0A0A0C]/95 py-4 border-b-2 border-white/20 backdrop-blur-md shadow-none text-white' 
+            ? 'bg-[#121214]/95 py-4 border-b-2 border-white/20 backdrop-blur-md shadow-none text-white' 
             : 'bg-transparent py-6 border-b border-transparent text-white'
         }`}
       >
@@ -134,7 +134,7 @@ export default function Header() {
             <SheetContent
               side="top"
               hideClose
-              className="bg-[#0A0A0C] border-b-2 border-white py-6 px-8 flex flex-col gap-6 shadow-none mt-[56px] rounded-none"
+              className="bg-[#121214] border-b-2 border-white py-6 px-8 flex flex-col gap-6 shadow-none mt-[56px] rounded-none"
             >
               <div className="flex flex-col gap-4">
                 {navItems.map((item) => (

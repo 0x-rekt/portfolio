@@ -240,10 +240,10 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
   ) => {
     // Reduced from 7 to 4 particles to cut down continuous render load
     const dustItems = [
-      { delay: "-4s", radius: "165px", color: "#CCFF00" },
-      { delay: "-12s", radius: "260px", color: "#FFFFFF" },
-      { delay: "-20s", radius: "340px", color: "#CCFF00" },
-      { delay: "-28s", radius: "410px", color: "#FFFFFF" },
+      { delay: "-4s", radius: "var(--dust-r1, 165px)", color: "#CCFF00" },
+      { delay: "-12s", radius: "var(--dust-r2, 260px)", color: "#FFFFFF" },
+      { delay: "-20s", radius: "var(--dust-r3, 340px)", color: "#CCFF00" },
+      { delay: "-28s", radius: "var(--dust-r4, 410px)", color: "#FFFFFF" },
     ];
 
     return (
@@ -262,6 +262,17 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             --radius-inner: 175px;
             --radius-mid: 285px;
             --radius-outer: 395px;
+            --dust-r1: 165px;
+            --dust-r2: 260px;
+            --dust-r3: 340px;
+            --dust-r4: 410px;
+            --solar-scale: 1;
+          }
+
+          @media (max-width: 1024px) {
+            :root {
+              --solar-scale: 0.85;
+            }
           }
 
           @media (max-width: 768px) {
@@ -269,14 +280,50 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
               --radius-inner: 100px;
               --radius-mid: 165px;
               --radius-outer: 230px;
+              --dust-r1: 90px;
+              --dust-r2: 150px;
+              --dust-r3: 200px;
+              --dust-r4: 250px;
+              --solar-scale: 1;
+            }
+          }
+
+          @media (max-width: 600px) {
+            :root {
+              --radius-inner: 90px;
+              --radius-mid: 145px;
+              --radius-outer: 200px;
+              --dust-r1: 80px;
+              --dust-r2: 130px;
+              --dust-r3: 175px;
+              --dust-r4: 220px;
+              --solar-scale: 0.95;
             }
           }
 
           @media (max-width: 480px) {
             :root {
               --radius-inner: 70px;
-              --radius-mid: 115px;
-              --radius-outer: 160px;
+              --radius-mid: 110px;
+              --radius-outer: 150px;
+              --dust-r1: 65px;
+              --dust-r2: 100px;
+              --dust-r3: 130px;
+              --dust-r4: 170px;
+              --solar-scale: 0.95;
+            }
+          }
+
+          @media (max-width: 380px) {
+            :root {
+              --radius-inner: 60px;
+              --radius-mid: 95px;
+              --radius-outer: 130px;
+              --dust-r1: 55px;
+              --dust-r2: 85px;
+              --dust-r3: 115px;
+              --dust-r4: 150px;
+              --solar-scale: 0.9;
             }
           }
 
@@ -361,7 +408,7 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             user-select: none;
             cursor: pointer;
             pointer-events: auto;
-            transition: border-color 0.25s, color 0.25s, background 0.25s, box-shadow 0.25s, scale 0.25s;
+            transition: border-color 0.25s, color 0.25s, background 0.25s, box-shadow 0.25s, scale 0.25s, padding 0.25s, gap 0.25s;
             box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
             will-change: transform, border-color, background, box-shadow;
             scale: 1;
@@ -379,14 +426,39 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             transform: scale(1.1);
             color: #000000 !important;
           }
+
+          @media (max-width: 768px) {
+            .orbit-logo-card {
+              padding: 0.35rem;
+              gap: 0px;
+            }
+            .orbit-logo-card span {
+              max-width: 0px;
+              opacity: 0;
+              visibility: hidden;
+              white-space: nowrap;
+              transition: max-width 0.25s ease-out, opacity 0.2s ease-out, margin 0.25s ease-out;
+              margin-left: 0px;
+            }
+            .orbit-logo-card:hover, .orbit-logo-card:active {
+              padding: 0.35rem 0.65rem;
+              gap: 6px;
+            }
+            .orbit-logo-card:hover span, .orbit-logo-card:active span {
+              max-width: 120px;
+              opacity: 1;
+              visibility: visible;
+              margin-left: 2px;
+            }
+          }
         `,
           }}
         />
 
         <div
-          className="absolute w-[360px] h-[360px] md:w-[940px] md:h-[940px] flex items-center justify-center"
+          className="absolute w-[360px] h-[360px] md:w-[940px] md:h-[940px] flex items-center justify-center origin-center transition-transform duration-300"
           style={{
-            transform: "rotateX(65deg) rotateY(-10deg)",
+            transform: "rotateX(65deg) rotateY(-10deg) scale(var(--solar-scale, 1))",
             transformStyle: "preserve-3d",
           }}
         >

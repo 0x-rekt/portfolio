@@ -170,9 +170,9 @@ const CommitEntry = ({ entry }: { entry: Entry }) => (
 
     {/* Card */}
     <div className="flex-1 pb-8 min-w-0">
-      <div className="rounded-none border border-white/10 bg-[#121214] hover:border-[#CCFF00]/40 transition-all duration-250 overflow-hidden hover:shadow-[0_4px_24px_rgba(204,255,0,0.06)]">
+      <div className="rounded-none border border-white/10 bg-[#1a1a1c] hover:border-[#CCFF00]/40 transition-all duration-250 overflow-hidden hover:shadow-[0_4px_24px_rgba(204,255,0,0.06)]">
         {/* Commit header row */}
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/10 bg-[#0a0a0c]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/10 bg-[#121214]">
           <GitCommitHorizontal className="w-3.5 h-3.5 text-white/30 shrink-0" />
           <code className="text-[11px] font-mono text-white/30">{entry.hash}</code>
           <div className="flex-1" />

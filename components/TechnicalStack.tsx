@@ -8,6 +8,20 @@ import { Badge } from '@/components/ui/badge';
 import { SolarSystem } from '@/components/ui/solar-system';
 import { cn } from '@/lib/utils';
 
+/**
+ * ============================================================================
+ * SKILL VISUAL CUSTOMIZATION THEMES
+ * ============================================================================
+ * When adding new technologies to `constants/skills.ts`, define their custom
+ * styling options here.
+ * 
+ * - `color`: Glow/hover color (HEX or CSS color). Set `#FFFFFF` to automatically
+ *   apply a high-contrast invert filter for dark-themed logo icons.
+ * - `tier`: Determines which orbit ring they populate ('inner' | 'mid' | 'outer').
+ * 
+ * NOTE: If a skill is added to `constants/skills.ts` but omitted here, it will
+ * dynamically default to the 'outer' ring with a '#CCFF00' highlight color.
+ */
 const SKILL_THEMES: Record<string, { color: string; tier: 'inner' | 'mid' | 'outer' }> = {
   "React.js": { color: "#61DAFB", tier: "inner" },
   "Next.js": { color: "#FFFFFF", tier: "inner" },
@@ -70,7 +84,15 @@ export default function TechnicalStack() {
           color: SKILL_THEMES[s.name]?.color || "#CCFF00",
           svg: (
             <div className="relative w-5 h-5">
-              <Image src={s.icon} alt={s.name} fill className="object-contain" />
+              <Image 
+                src={s.icon} 
+                alt={s.name} 
+                fill 
+                className={cn(
+                  "object-contain",
+                  SKILL_THEMES[s.name]?.color === "#FFFFFF" && "invert"
+                )} 
+              />
             </div>
           )
         }))
@@ -89,7 +111,15 @@ export default function TechnicalStack() {
           color: SKILL_THEMES[s.name]?.color || "#CCFF00",
           svg: (
             <div className="relative w-5 h-5">
-              <Image src={s.icon} alt={s.name} fill className="object-contain" />
+              <Image 
+                src={s.icon} 
+                alt={s.name} 
+                fill 
+                className={cn(
+                  "object-contain",
+                  SKILL_THEMES[s.name]?.color === "#FFFFFF" && "invert"
+                )} 
+              />
             </div>
           )
         }))
@@ -100,15 +130,24 @@ export default function TechnicalStack() {
       radiusClass: "var(--radius-outer)",
       radiusPx: 395,
       speed: 52,
+      // If a skill doesn't specify a tier, it defaults to orbiting on the outer ring.
       items: skills
-        .filter(s => SKILL_THEMES[s.name]?.tier === 'outer')
+        .filter(s => (SKILL_THEMES[s.name]?.tier || 'outer') === 'outer')
         .map(s => ({
           id: s.name.toLowerCase().replace(/[^a-z]/g, ''),
           label: s.name,
           color: SKILL_THEMES[s.name]?.color || "#CCFF00",
           svg: (
             <div className="relative w-5 h-5">
-              <Image src={s.icon} alt={s.name} fill className="object-contain" />
+              <Image 
+                src={s.icon} 
+                alt={s.name} 
+                fill 
+                className={cn(
+                  "object-contain",
+                  (SKILL_THEMES[s.name]?.color || "#CCFF00") === "#FFFFFF" && "invert"
+                )} 
+              />
             </div>
           )
         }))
@@ -230,7 +269,10 @@ export default function TechnicalStack() {
                             src={skill.icon}
                             alt={skill.name}
                             fill
-                            className="object-contain"
+                            className={cn(
+                              "object-contain",
+                              SKILL_THEMES[skill.name]?.color === "#FFFFFF" && "invert"
+                            )}
                           />
                         </div>
                         <span>{skill.name}</span>

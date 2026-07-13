@@ -1,3 +1,15 @@
+/**
+ * ============================================================================
+ * SKILLS REGISTRATION CONFIGURATION
+ * ============================================================================
+ * When adding or updating technologies here:
+ * 1. Add the skill name and path to its icon in public/ folder.
+ * 2. Update `SKILL_THEMES` in `components/TechnicalStack.tsx` to set its orbit
+ *    tier ('inner' | 'mid' | 'outer') and active glow highlight color.
+ * 
+ * If omitted from `SKILL_THEMES`, the skill will automatically default to the
+ * 'outer' ring with the primary neon theme color (#CCFF00).
+ */
 export const skills = [
   {
     name: "JavaScript",
