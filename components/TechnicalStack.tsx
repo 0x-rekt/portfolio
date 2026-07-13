@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useMemo } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence, useInView } from 'motion/react';
+import { motion, AnimatePresence, useInView } from 'motion/react';
 import { skills } from '@/constants/skills';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
@@ -55,19 +55,7 @@ const SKILL_THEMES: Record<string, { color: string; tier: 'inner' | 'mid' | 'out
 export default function TechnicalStack() {
   const sectionRef = useRef<HTMLElement>(null);
   const [viewMode, setViewMode] = useState<'orbit' | 'grid'>('orbit');
-  const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start 85%', 'start 20%'],
-  });
-
-  const smooth = useSpring(scrollYProgress, { stiffness: 70, damping: 22, restDelta: 0.001 });
-
-  // Section enters rising from a rotated plane below
-  const rotateX = useTransform(smooth, [0, 1], [10, 0]);
-  const translateY = useTransform(smooth, [0, 1], [60, 0]);
-  const opacity = useTransform(smooth, [0, 0.4], [0, 1]);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   const customOrbits = useMemo(() => [
     {
@@ -155,17 +143,14 @@ export default function TechnicalStack() {
   ], []);
 
   return (
-    <motion.section
+    <section
       id="skills"
       ref={sectionRef}
-      className="py-24 relative overflow-hidden bg-transparent section-3d-enter"
+      className="py-24 relative overflow-hidden bg-transparent"
       style={{
-        opacity,
-        rotateX,
-        y: translateY,
-        transformOrigin: 'center bottom',
-        perspective: 1000,
-        willChange: 'transform, opacity',
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? 'translateY(0)' : 'translateY(40px)',
+        transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
       }}
     >
       {/* Grid Overlay */}
@@ -285,7 +270,7 @@ export default function TechnicalStack() {
           </AnimatePresence>
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
 

@@ -253,6 +253,7 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
           "relative flex items-center justify-center w-full max-w-[940px] h-[320px] md:h-[450px] perspective-[1200px] select-none overflow-visible",
           className,
         )}
+        style={{ contain: "layout" }}
         {...props}
       >
         <style
@@ -362,11 +363,15 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
           .animate-custom-orbit {
             animation: custom-orbitMove var(--orbit-duration) linear infinite;
             animation-play-state: var(--orbit-play-state);
+          }
+          .animate-custom-orbit.is-running {
             will-change: transform;
           }
           .animate-custom-billboard {
             animation: custom-billboardCancel var(--orbit-duration) linear infinite;
             animation-play-state: var(--orbit-play-state);
+          }
+          .animate-custom-billboard.is-running {
             will-change: transform;
           }
           .animate-custom-sun-pulse {
@@ -387,6 +392,13 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             opacity: 1 !important;
           }
 
+          /* Pause dust on low-power / small screens */
+          @media (max-width: 480px) {
+            .dust-particle {
+              display: none;
+            }
+          }
+
           .orbit-logo-card {
             position: absolute;
             left: 50%;
@@ -395,9 +407,7 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             align-items: center;
             gap: 8px;
             padding: 0.45rem 0.95rem;
-            background: rgba(9, 9, 11, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(9, 9, 11, 0.92);
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 0px;
             font-family: var(--font-mono), monospace;
@@ -408,9 +418,8 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
             user-select: none;
             cursor: pointer;
             pointer-events: auto;
-            transition: border-color 0.25s, color 0.25s, background 0.25s, box-shadow 0.25s, scale 0.25s, padding 0.25s, gap 0.25s;
+            transition: border-color 0.2s, color 0.2s, background 0.2s, box-shadow 0.2s, scale 0.2s, padding 0.2s, gap 0.2s;
             box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
-            will-change: transform, border-color, background, box-shadow;
             scale: 1;
           }
 
@@ -501,10 +510,10 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
           {dustItems.map((dust, idx) => (
             <div
               key={idx}
-              className="absolute left-1/2 top-1/2 w-1 h-1 rounded-full opacity-40 pointer-events-none animate-custom-orbit"
+              className={`dust-particle absolute left-1/2 top-1/2 w-1 h-1 rounded-full opacity-40 pointer-events-none animate-custom-orbit${!isPaused ? " is-running" : ""}`}
               style={{
                 background: dust.color,
-                boxShadow: `0 0 6px ${dust.color}`,
+                boxShadow: `0 0 4px ${dust.color}`,
                 animationDelay: dust.delay,
                 animationPlayState: isPaused ? "paused" : "running",
                 animationDuration: `${24 / speedMultiplier}s`,
@@ -536,7 +545,7 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                   return (
                     <div
                       key={item.id}
-                      className="absolute left-1/2 top-1/2 w-0 h-0 pointer-events-none animate-custom-orbit"
+                      className={`absolute left-1/2 top-1/2 w-0 h-0 pointer-events-none animate-custom-orbit${!isPaused ? " is-running" : ""}`}
                       style={{
                         animationDelay: `${delayValue}s`,
                         animationDuration: `${durationValue}s`,
@@ -553,12 +562,12 @@ export const SolarSystem = React.forwardRef<HTMLDivElement, SolarSystemProps>(
                         style={{
                           width: orbit.radiusClass,
                           background: `linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(255,255,255,0.15) 20%, var(--hover-color) 80%, var(--hover-color) 100%)`,
-                          boxShadow: `0 0 8px var(--hover-color), 0 0 16px var(--hover-color)40`,
+                          boxShadow: `0 0 6px var(--hover-color)`,
                         } as React.CSSProperties}
                       />
 
                       <div
-                        className="orbit-logo-card animate-custom-billboard"
+                        className={`orbit-logo-card animate-custom-billboard${!isPaused ? " is-running" : ""}`}
                         style={{
                           animationDelay: `${delayValue}s`,
                           animationDuration: `${durationValue}s`,
