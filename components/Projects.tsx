@@ -197,9 +197,9 @@ export default function Projects() {
                       {project.liveLink && (
                         <Button
                           asChild
-                          className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest font-bold text-black bg-[#CCFF00] border-2 border-[#CCFF00] px-3 py-1.5 hover:bg-white hover:border-white transition-all cursor-pointer shadow-[2px_2px_0px_#FFF] hover:shadow-none active:translate-x-[1px] active:translate-y-[1px] rounded-none h-auto"
+                          className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest font-bold text-black bg-[#CCFF00] border-2 border-[#CCFF00] px-3 py-1.5 hover:bg-white hover:border-white transition-all hover:cursor-pointer shadow-[2px_2px_0px_#FFF] hover:shadow-none active:translate-x-[1px] active:translate-y-[1px] rounded-none h-auto"
                         >
-                          <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                          <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
                             <ExternalLink className="w-3 h-3" />
                             LIVE DEMO
                           </a>
@@ -209,9 +209,9 @@ export default function Projects() {
                         <Button
                           asChild
                           variant="outline"
-                          className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest font-bold text-white bg-transparent border-2 border-white px-3 py-1.5 hover:bg-white hover:text-black transition-all cursor-pointer rounded-none h-auto"
+                          className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest font-bold text-white bg-transparent border-2 border-white px-3 py-1.5 hover:bg-white hover:text-black transition-all hover:cursor-pointer rounded-none h-auto"
                         >
-                          <a href={project.githubLink} target="_blank" rel="noopener noreferrer">
+                          <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
                             <Github className="w-3 h-3" />
                             SOURCE
                           </a>

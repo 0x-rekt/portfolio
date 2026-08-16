@@ -34,25 +34,21 @@ export const projects = [
     ],
   },
   {
-    name: "FlowForge",
+    name: "Wisp",
     description:
-      "FlowForge is an AI-powered, real-time collaborative whiteboard platform that transforms ideas into diagrams and diagrams into production-ready code. Built for modern teams who want to accelerate from concept to implementation.",
-    image: "/flowforge.png",
-    liveLink: "https://flowforge-zeta.vercel.app/",
-    githubLink: "https://github.com/0x-rekt/flowforge",
+      "Wisp is a terminal-based AI coding agent for inspecting, editing, testing, and reasoning about software projects from an interactive TUI.",
+    image: "/wisp.png",
+    liveLink: "",
+    githubLink: "https://github.com/0x-rekt/Wisp",
     techStack: [
       {
         name: "TypeScript",
         icon: "/ts.png",
       },
       {
-        name: "Next.js",
-        icon: "/nextjs.png",
-      },
-      {
-        name: "PostgreSQL",
-        icon: "/postgres.png",
-      },
+        name: "Node.js",
+        icon: "/nodejs.png",
+      }
     ],
   },
   {
