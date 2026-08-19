@@ -38,6 +38,7 @@ const SKILL_THEMES: Record<string, { color: string; tier: 'inner' | 'mid' | 'out
   "FastAPI": { color: "#009688", tier: "mid" },
   "Firebase": { color: "#FFCA28", tier: "mid" },
 
+  "Rust": { color: "#CE422B", tier: "mid" },
   "Python": { color: "#3776AB", tier: "outer" },
   "Langchain": { color: "#13B981", tier: "outer" },
   "Hugging Face": { color: "#FFD21E", tier: "outer" },

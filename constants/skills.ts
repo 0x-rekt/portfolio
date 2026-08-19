@@ -69,6 +69,10 @@ export const skills = [
     icon: "/firebase.svg",
   },
   {
+    name: "Rust",
+    icon: "/rust.svg"
+  },
+  {
     name: "Python",
     icon: "/python.svg",
   },
