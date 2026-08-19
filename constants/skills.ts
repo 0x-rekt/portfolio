@@ -13,64 +13,64 @@
 export const skills = [
   {
     name: "JavaScript",
-    icon: "/js.png",
+    icon: "/js.svg",
   },
   {
     name: "TypeScript",
-    icon: "/ts.png",
+    icon: "/ts.svg",
   },
 
   {
     name: "Next.js",
-    icon: "/nextjs.png",
+    icon: "/nextjs.svg",
   },
   {
     name: "Tailwind",
-    icon: "/tailwind.png",
+    icon: "/tailwind.svg",
   },
   {
     name: "React.js",
-    icon: "/react-native.png",
+    icon: "/react-native.svg",
   },
   {
     name: "Redux",
-    icon: "/redux.png",
+    icon: "/redux.svg",
   },
   {
     name: "Git",
-    icon: "/git.png",
+    icon: "/git.svg",
   },
   {
     name: "Github",
-    icon: "/github.png",
+    icon: "/github.svg",
   },
   {
     name: "Node.js",
-    icon: "/nodejs.png",
+    icon: "/nodejs.svg",
   },
   {
     name: "Express.js",
-    icon: "/express.png",
+    icon: "/express.svg",
   },
   {
     name: "MongoDB",
-    icon: "/mongodb.png",
+    icon: "/mongodb.svg",
   },
   {
     name: "PostgreSQL",
-    icon: "/postgres.png",
+    icon: "/postgres.svg",
   },
   {
     name: "Prisma",
-    icon: "/prisma.png",
+    icon: "/prisma.svg",
   },
   {
     name: "Firebase",
-    icon: "/firebase.png",
+    icon: "/firebase.svg",
   },
   {
     name: "Python",
-    icon: "/python.png",
+    icon: "/python.svg",
   },
   {
     name: "FastAPI",
@@ -78,38 +78,38 @@ export const skills = [
   },
   {
     name: "Scikit-learn",
-    icon: "/scikit-learn.png",
+    icon: "/scikit-learn.svg",
   },
   {
     name: "Langchain",
-    icon: "/langchain.png",
+    icon: "/langchain.svg",
   },
   {
     name: "Hugging Face",
-    icon: "/hf.png",
+    icon: "/hf.svg",
   },
   {
     name: "Pinecone",
-    icon: "/pinecone.png",
+    icon: "/pinecone.svg",
   },
   {
     name: "Shell Scripting",
-    icon: "/shell.png",
+    icon: "/shell.svg",
   },
   {
     name: "CI/CD",
-    icon: "/actions.png",
+    icon: "/actions.svg",
   },
   {
     name: "Docker",
-    icon: "/docker.png",
+    icon: "/docker.svg",
   },
   {
     name: "AWS",
-    icon: "/aws.png",
+    icon: "/aws.svg",
   },
   {
     name: "GCP",
-    icon: "/GCP.png",
+    icon: "/GCP.svg",
   },
 ];
