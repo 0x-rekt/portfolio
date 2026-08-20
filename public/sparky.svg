@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="360" viewBox="0 0 800 360" role="img" aria-label="Sparky ASCII Art Logo">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c0d12" />
+      <stop offset="100%" stop-color="#050508" />
+    </linearGradient>
+
+    <!-- Neon Glow Filter for ASCII Art -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComponentTransfer in="blur" result="glow">
+        <feFuncA type="linear" slope="0.6" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Radial ambient glow behind ASCII text -->
+    <radialGradient id="ambientGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#CCFF00" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#CCFF00" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Background Grid Pattern -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.025)" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <!-- Base Card Frame -->
+  <rect width="800" height="360" rx="12" fill="url(#bgGradient)" stroke="#27272a" stroke-width="2" />
+
+  <!-- Grid overlay -->
+  <rect width="800" height="360" rx="12" fill="url(#grid)" />
+
+  <!-- Ambient light pool -->
+  <ellipse cx="400" cy="150" rx="340" ry="110" fill="url(#ambientGlow)" />
+
+  <!-- Terminal Header Bar -->
+  <line x1="0" y1="40" x2="800" y2="40" stroke="#27272a" stroke-width="1.5" />
+
+  <!-- Terminal Window Control Buttons -->
+  <circle cx="24" cy="20" r="5" fill="#ef4444" opacity="0.85" />
+  <circle cx="40" cy="20" r="5" fill="#eab308" opacity="0.85" />
+  <circle cx="56" cy="20" r="5" fill="#22c55e" opacity="0.85" />
+
+  <!-- Terminal Title -->
+  <text x="400" y="24" font-family="'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace" font-size="12" fill="#a1a1aa" text-anchor="middle" font-weight="500">sparky@rust-kv:~$ ./sparky-server --aof=appendonly.aof</text>
+
+  <!-- Protocol Badge -->
+  <rect x="680" y="10" width="96" height="20" rx="4" fill="rgba(204, 255, 0, 0.08)" stroke="rgba(204, 255, 0, 0.3)" stroke-width="1" />
+  <text x="728" y="24" font-family="'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace" font-size="10" fill="#CCFF00" text-anchor="middle" font-weight="700">RESP2 / TCP</text>
+
+  <!-- SPARKY ASCII Art: each character pinned to an explicit x coordinate (fixed grid)
+       so alignment doesn't depend on the renderer's font glyph metrics -->
+  <g filter="url(#neonGlow)">
+    <text font-family="'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, Monaco, 'Courier New', monospace" font-size="17" font-weight="700" fill="#CCFF00" xml:space="preserve">
+      <tspan x="121.8 132.2 142.8 153.2 163.8 174.2 184.8 195.2 205.8 216.2 226.8 237.2 247.8 258.2 268.8 279.2 289.8 300.2 310.8 321.2 331.8 342.2 352.8 363.2 373.8 384.2 394.8 405.2 415.8 426.2 436.8 447.2 457.8 468.2 478.8 489.2 499.8 510.2 520.8 531.2 541.8 552.2 562.8 573.2 583.8 594.2 604.8 615.2 625.8 636.2 646.8 657.2 667.8" y="62"> ____     ____        _       ____     _  __  __   __</tspan>
+      <tspan x="121.8 132.2 142.8 153.2 163.8 174.2 184.8 195.2 205.8 216.2 226.8 237.2 247.8 258.2 268.8 279.2 289.8 300.2 310.8 321.2 331.8 342.2 352.8 363.2 373.8 384.2 394.8 405.2 415.8 426.2 436.8 447.2 457.8 468.2 478.8 489.2 499.8 510.2 520.8 531.2 541.8 552.2 562.8 573.2 583.8 594.2 604.8 615.2 625.8 636.2 646.8 657.2 667.8" y="86">/ ___|   |  _ \      / \     |  _ \   | |/ /  \ \ / /</tspan>
+      <tspan x="121.8 132.2 142.8 153.2 163.8 174.2 184.8 195.2 205.8 216.2 226.8 237.2 247.8 258.2 268.8 279.2 289.8 300.2 310.8 321.2 331.8 342.2 352.8 363.2 373.8 384.2 394.8 405.2 415.8 426.2 436.8 447.2 457.8 468.2 478.8 489.2 499.8 510.2 520.8 531.2 541.8 552.2 562.8 573.2 583.8 594.2 604.8 615.2 625.8 636.2 646.8 657.2 667.8" y="110">\___ \   | |_) |    / _ \    | |_) |  | ' /    \ V / </tspan>
+      <tspan x="121.8 132.2 142.8 153.2 163.8 174.2 184.8 195.2 205.8 216.2 226.8 237.2 247.8 258.2 268.8 279.2 289.8 300.2 310.8 321.2 331.8 342.2 352.8 363.2 373.8 384.2 394.8 405.2 415.8 426.2 436.8 447.2 457.8 468.2 478.8 489.2 499.8 510.2 520.8 531.2 541.8 552.2 562.8 573.2 583.8 594.2 604.8 615.2 625.8 636.2 646.8 657.2 667.8" y="134"> ___) |  |  __/    / ___ \   |  _ &lt;   | . \     | |  </tspan>
+      <tspan x="121.8 132.2 142.8 153.2 163.8 174.2 184.8 195.2 205.8 216.2 226.8 237.2 247.8 258.2 268.8 279.2 289.8 300.2 310.8 321.2 331.8 342.2 352.8 363.2 373.8 384.2 394.8 405.2 415.8 426.2 436.8 447.2 457.8 468.2 478.8 489.2 499.8 510.2 520.8 531.2 541.8 552.2 562.8 573.2 583.8 594.2 604.8 615.2 625.8 636.2 646.8 657.2 667.8" y="158">|____/   |_|      /_/   \_\  |_| \_\  |_|\_\    |_|  </tspan>
+    </text>
+  </g>
+
+  <!-- Subtitle / Terminal Log Output -->
+  <text x="400" y="245" font-family="'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace" font-size="13" fill="#e4e4e7" text-anchor="middle" font-weight="500">
+    <tspan fill="#22c55e">[READY]</tspan> In-Memory Data Store <tspan fill="#71717a">|</tspan> <tspan fill="#38bdf8">Redis RESP2 Engine</tspan> <tspan fill="#71717a">|</tspan> <tspan fill="#eab308">Rust Core</tspan>
+  </text>
+
+  <!-- Bottom Accent / Feature Chips -->
+  <g transform="translate(400, 290)">
+    <!-- Feature 1 -->
+    <g transform="translate(-240, 0)">
+      <rect x="-65" y="-12" width="130" height="24" rx="4" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" />
+      <text x="0" y="4" font-family="'JetBrains Mono', 'Fira Code', Consolas, monospace" font-size="11" fill="#a1a1aa" text-anchor="middle" font-weight="600">RESP2 PROTOCOL</text>
+    </g>
+    <!-- Feature 2 -->
+    <g transform="translate(-80, 0)">
+      <rect x="-75" y="-12" width="150" height="24" rx="4" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" />
+      <text x="0" y="4" font-family="'JetBrains Mono', 'Fira Code', Consolas, monospace" font-size="11" fill="#a1a1aa" text-anchor="middle" font-weight="600">AOF PERSISTENCE</text>
+    </g>
+    <!-- Feature 3 -->
+    <g transform="translate(80, 0)">
+      <rect x="-65" y="-12" width="130" height="24" rx="4" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" />
+      <text x="0" y="4" font-family="'JetBrains Mono', 'Fira Code', Consolas, monospace" font-size="11" fill="#a1a1aa" text-anchor="middle" font-weight="600">RUST ENGINE</text>
+    </g>
+    <!-- Feature 4 -->
+    <g transform="translate(230, 0)">
+      <rect x="-65" y="-12" width="130" height="24" rx="4" fill="rgba(255, 255, 255, 0.04)" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" />
+      <text x="0" y="4" font-family="'JetBrains Mono', 'Fira Code', Consolas, monospace" font-size="11" fill="#a1a1aa" text-anchor="middle" font-weight="600">REDIS-CLI COMPAT</text>
+    </g>
+  </g>
+</svg>
