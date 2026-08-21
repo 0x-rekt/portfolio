@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'motion/react';
-import { ArrowRight, Binary, Cpu, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, Cpu, Github, Linkedin, Mail, MapPin } from 'lucide-react';
 import { FaXTwitter } from 'react-icons/fa6';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -226,7 +226,7 @@ export default function Hero() {
     <motion.section
       id="hero"
       ref={sectionRef}
-      aria-label="Introduction — Sowdarjya Kolay, AI Engineer & Full-Stack Developer"
+      aria-label="Introduction — Sowdarjya Kolay, AI Engineer & Systems-Minded Full-Stack Developer"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 bg-transparent"
       style={{ scale: sectionScale, transformOrigin: 'center top' }}
     >
@@ -293,32 +293,10 @@ export default function Hero() {
             >
               <Badge className="inline-flex items-center gap-2 py-1 px-2.5 bg-zinc-900 border-2 border-white/20 text-white rounded-none h-auto font-mono text-[11px] uppercase tracking-wider font-bold">
                 <Cpu className="w-3.5 h-3.5 text-[#CCFF00]" />
-                AI Engineer &amp; Full-Stack SDE
+                AI Engineer &amp; Systems-Minded Full-Stack Developer
               </Badge>
             </motion.div>
           </div>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.3, ease: 'easeOut' }}
-            className="text-zinc-300 font-sans text-base md:text-lg max-w-xl leading-relaxed font-normal"
-          >
-            Building scalable web applications and integrating advanced AI capabilities. Specializing in high-performance architectures and intelligent systems. Combining a deep electrical foundation with software engineering excellence.
-          </motion.p>
-
-          {/* Academic tag */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <Badge className="text-xs text-black font-mono inline-flex items-start sm:items-center gap-2 bg-[#CCFF00] px-3 py-1.5 border-2 border-white font-bold shadow-[2px_2px_0px_#FFF] rounded-none h-auto max-w-full !whitespace-normal !overflow-visible w-fit">
-              <Binary className="w-3.5 h-3.5 text-black shrink-0 mt-0.5 sm:mt-0" />
-              <span className="break-words leading-snug">B.Tech in Electronics and Communication Engineering</span>
-            </Badge>
-          </motion.div>
 
           {/* Location */}
           <motion.div
@@ -448,7 +426,7 @@ export default function Hero() {
               </div>
               <div>
                 <div className="font-sans text-[10px] text-zinc-400 font-bold">IO SPEED</div>
-                <div className="font-mono text-xs text-white font-bold">&lt; 14ms RESP</div>
+                <div className="font-mono text-xs text-white font-bold">&lt; 0.3ms RESP</div>
               </div>
             </div>
           </motion.div>
