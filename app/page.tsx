@@ -1,7 +1,7 @@
-import ExperienceTimeline from "@/components/ExperienceTimeline";
-import Hero from "@/components/Hero";
-import Projects from "@/components/Projects";
-import TechnicalStack from "@/components/TechnicalStack";
+import ExperienceTimeline from "@/components/ExperienceTimelineRedesign";
+import Hero from "@/components/HeroRedesign";
+import Projects from "@/components/ProjectsRedesign";
+import TechnicalStack from "@/components/TechnicalStackRedesign";
 import React from "react";
 
 const jsonLd = {

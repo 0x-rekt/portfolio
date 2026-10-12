@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { JetBrains_Mono } from "next/font/google";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Footer from "@/components/FooterRedesign";
+import Header from "@/components/HeaderRedesign";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { TooltipProvider } from "@/components/ui/tooltip";
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
+import ThemeProvider from "@/components/ThemeProvider";
 
 const siteUrl = "https://skolay.xyz";
 
@@ -88,15 +83,17 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning={true}
-      className={`${jetbrainsMono.variable}`}
+      className=""
     >
-      <body className="font-mono">
-        <TooltipProvider>
-          <ScrollProgressBar />
-          <Header />
-          {children}
-          <Footer />
-        </TooltipProvider>
+      <body className="font-sans">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <TooltipProvider>
+            <ScrollProgressBar />
+            <Header />
+            {children}
+            <Footer />
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

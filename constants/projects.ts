@@ -1,5 +1,20 @@
 export const projects = [
   {
+    title: "Perchly",
+    description:
+      "An AI pull-request review agent that runs security, code quality, test coverage, and documentation specialists in parallel. High-risk reviews pause for human approval, while every action is recorded for observability.",
+    detail:
+      "Temporal workflows, GitHub App webhooks, PostgreSQL spans, a human-in-the-loop queue, and reviewable fix PRs.",
+    liveLink: "",
+    githubLink: "https://github.com/0x-rekt/Perchly",
+    techStack: [
+      { name: "Python", icon: "/python.svg" },
+      { name: "FastAPI", icon: "/fastapi.svg" },
+      { name: "PostgreSQL", icon: "/postgres.svg" },
+      { name: "Docker", icon: "/docker.svg" },
+    ],
+  },
+  {
     name: "sparky",
     description:
       "Sparky is a Redis-like in-memory data store written from scratch in Rust. It speaks RESP2 over TCP, works with standard redis-cli, supports strings, lists, hashes, and sets, and persists successful write commands through an append-only file (AOF).",
@@ -63,24 +78,23 @@ export const projects = [
   },
 
   {
-    title: "JobPair AI",
+    title: "Perchly",
     description:
-      "Jobpair_ai is an AI-powered career tool offering smart resume reviews, tailored roadmaps, cover letter generation, and voice-based mock interviews—built with a secure, scalable tech stack.",
-    image: "/jobpair_ai.svg",
-    liveLink: "https://jobpair-ai-beta.vercel.app/",
-    githubLink: "https://github.com/0x-rekt/jobpair-ai",
+      "An AI pull-request review agent that runs security, code quality, test coverage, and documentation specialists in parallel. High-risk reviews pause for human approval, while every action is recorded for observability.",
+    liveLink: "",
+    githubLink: "https://github.com/0x-rekt/Perchly",
     techStack: [
       {
-        name: "TypeScript",
-        icon: "/ts.svg",
+        name: "Python",
+        icon: "/python.svg",
       },
       {
-        name: "Next.js",
-        icon: "/nextjs.svg",
+        name: "FastAPI",
+        icon: "/fastapi.svg",
       },
       {
-        name: "Langchain",
-        icon: "/langchain.svg",
+        name: "Docker",
+        icon: "/docker.svg",
       },
       {
         name: "PostgreSQL",
