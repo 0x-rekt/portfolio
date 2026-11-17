@@ -299,7 +299,7 @@ html { scroll-behavior: smooth; }
 .dossier-hero { padding-top: 8rem; }
 .dossier-rail { width: min(100%, 58rem); min-width: 0; margin: 0 auto; }
 .dossier-kicker, .mono-label, .eyebrow, .section-index, .project-number, .project-type, .project-meta, .availability, .footer-meta { font-family: "Geist Mono", "JetBrains Mono", ui-monospace, monospace; }
-.dossier-kicker { padding-bottom: 0.9rem; border-bottom: 1px solid var(--dossier-line); color: var(--dossier-muted); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.dossier-kicker { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1rem; padding-bottom: 0.9rem; border-bottom: 1px solid var(--dossier-line); color: var(--dossier-muted); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(14rem, 0.55fr); gap: 5rem; padding: 4.5rem 0 4rem; }
 .hero-copy, .identity-note, .project-body, .stack-group > *, .experience-list article > * { min-width: 0; }
 .hero-copy h1, .section-heading h2, .dossier-footer h2 { margin: 0; color: var(--dossier-text); font-weight: 650; letter-spacing: -0.06em; line-height: 0.98; text-wrap: balance; }

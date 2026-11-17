@@ -14,7 +14,7 @@ type Project = {
   image?: string;
   liveLink?: string;
   githubLink?: string;
-  techStack: { name: string; icon: string }[];
+  techStack: { name: string; icon?: string }[];
 };
 
 export default function Projects() {
@@ -85,14 +85,16 @@ export default function Projects() {
                         variant="outline"
                         className="flex items-center gap-1.5 font-mono text-[10px] text-zinc-300 bg-zinc-900/60 px-2 py-1 border border-white/15 font-bold rounded-none h-auto"
                       >
-                        <div className="relative w-3.5 h-3.5 shrink-0">
-                          <Image
-                            src={tech.icon}
-                            alt={tech.name}
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
+                        {tech.icon && (
+                          <div className="relative w-3.5 h-3.5 shrink-0">
+                            <Image
+                              src={tech.icon}
+                              alt=""
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                        )}
                         {tech.name}
                       </Badge>
                     ))}

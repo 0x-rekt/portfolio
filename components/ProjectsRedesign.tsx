@@ -11,13 +11,12 @@ export default function ProjectsRedesign() {
         <div className="section-heading"><p className="mono-label">Selected work</p><h2>Projects with a point of view.</h2><p>Systems built to make hard technical workflows observable, useful, and easier to operate.</p></div>
         <div className="project-list">
           {projects.map((project, index) => {
-            const title = "title" in project ? project.title : project.name;
-            return <motion.article key={title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.55, delay: index * 0.04, ease: [0.32, 0.72, 0, 1] }} className={index === 0 ? "project-row project-featured" : "project-row"}>
+            return <motion.article key={project.title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.55, delay: index * 0.04, ease: [0.32, 0.72, 0, 1] }} className={index === 0 ? "project-row project-featured" : "project-row"}>
               <div className="project-number">0{index + 1}</div>
               <div className="project-body">
-                <div className="project-title-line"><h3>{title}</h3><span className="project-type">{index === 0 ? "Featured system" : "Open source"}</span></div>
+                <div className="project-title-line"><h3>{project.title}</h3><span className="project-type">{project.type}</span></div>
                 <p>{project.description}</p>
-                {"detail" in project && <p className="project-detail">{project.detail}</p>}
+                <p className="project-detail">{project.detail}</p>
                 <div className="project-meta">{project.techStack.map((tech) => <span key={tech.name}>{tech.name}</span>)}</div>
                 <div className="project-links">
                   {project.githubLink && <a href={project.githubLink} target="_blank" rel="noreferrer"><FiGithub aria-hidden="true" /> Source <FiArrowUpRight aria-hidden="true" /></a>}

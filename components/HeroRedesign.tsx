@@ -14,7 +14,10 @@ export default function HeroRedesign() {
   return (
     <section id="hero" className="dossier-section dossier-hero">
       <div className="dossier-rail">
-        <div className="dossier-kicker">AI systems / full-stack engineering</div>
+        <div className="dossier-kicker">
+          <span>AI systems / full-stack engineering</span>
+          <span>Based in Kolkata, India</span>
+        </div>
         <div className="hero-grid">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
